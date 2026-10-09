@@ -404,17 +404,26 @@ function navigate(id,push=true){
    const card=document.createElement('article');card.className='feedback-message';
    const head=document.createElement('header'),name=document.createElement('strong'),date=document.createElement('time'),body=document.createElement('p');name.textContent=item.name;date.textContent=new Date(item.createdAt).toLocaleString([], {dateStyle:'medium',timeStyle:'short'});body.textContent=item.message;head.append(name,date);card.append(head,body);
    if(item.reply){const reply=document.createElement('div');reply.className='feedback-reply';const who=document.createElement('strong');who.textContent='QUELLA REPLIED';const text=document.createElement('p');text.textContent=item.reply;reply.append(who,text);card.append(reply);}
-   if(feedbackOwner&&!item.reply){const control=document.createElement('div');control.className='reply-control';const input=document.createElement('textarea');input.maxLength=1200;input.placeholder='Write your reply…';const send=document.createElement('button');send.className='pixel-key';send.textContent='REPLY';send.onclick=async()=>{if(!input.value.trim())return;send.disabled=true;try{const res=await fetch('/api/feedback/reply',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({commentId:item.id,reply:input.value.trim()})});if(!res.ok)throw Error();await loadFeedback(true);}catch{$('feedbackStatus').textContent='REPLY FAILED · TRY AGAIN';}finally{send.disabled=false;}};control.append(input,send);card.append(control);}
    return card;
  }
- async function loadFeedback(force=false){
-   if(feedbackLoaded&&!force)return;const list=$('feedbackList');list.innerHTML='<p class="feedback-loading">Opening the message archive…</p>';
-   try{const res=await fetch('/api/feedback',{headers:{accept:'application/json'}});if(!res.ok)throw Error();const data=await res.json();feedbackOwner=!!data.isOwner;feedbackLoaded=true;list.replaceChildren();
-     if(!data.comments.length){const empty=document.createElement('p');empty.className='feedback-empty';empty.textContent='No messages yet. Be the first visitor to leave a note.';list.append(empty);}else data.comments.forEach(item=>list.append(makeFeedbackMessage(item)));
-     $('feedbackConnection').textContent=feedbackOwner?'OWNER MODE · ONLINE':'GUEST MODE · ONLINE';
-   }catch{list.innerHTML='<p class="feedback-loading feedback-error">The message archive is temporarily offline. Your draft is still here.</p>';$('feedbackConnection').textContent='OFFLINE';}
+ // GitHub Pages stores visitor notes on this device; it has no server API.
+ const feedbackStorageKey='quella-living-studio-notes';
+ function readLocalFeedback(){
+   try{return JSON.parse(localStorage.getItem(feedbackStorageKey)||'[]');}catch{return [];}
  }
- $('feedbackForm').addEventListener('submit',async e=>{e.preventDefault();const button=e.currentTarget.querySelector('button'),name=$('feedbackName').value.trim(),message=$('feedbackMessage').value.trim();if(!name||!message)return;button.disabled=true;$('feedbackStatus').textContent='SENDING…';try{const res=await fetch('/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name,message})});if(!res.ok)throw Error();$('feedbackMessage').value='';$('feedbackStatus').textContent='MESSAGE SENT ✦';await loadFeedback(true);}catch{$('feedbackStatus').textContent='SEND FAILED · YOUR DRAFT IS SAFE';}finally{button.disabled=false;}});
+ async function loadFeedback(force=false){
+   if(feedbackLoaded&&!force)return;
+   const list=$('feedbackList');feedbackOwner=false;feedbackLoaded=true;list.replaceChildren();
+   const comments=readLocalFeedback();
+   if(!comments.length){const empty=document.createElement('p');empty.className='feedback-empty';empty.textContent='Leave a personal note here. Notes are saved in this browser and are not sent to Quella.';list.append(empty);}
+   else comments.forEach(item=>list.append(makeFeedbackMessage(item)));
+   $('feedbackConnection').textContent='PERSONAL NOTES · THIS BROWSER';
+ }
+ $('feedbackForm').addEventListener('submit',async e=>{
+   e.preventDefault();const name=$('feedbackName').value.trim(),message=$('feedbackMessage').value.trim();if(!name||!message)return;
+   try{const comments=readLocalFeedback();comments.unshift({id:Date.now(),name,message,createdAt:new Date().toISOString()});localStorage.setItem(feedbackStorageKey,JSON.stringify(comments));$('feedbackMessage').value='';$('feedbackStatus').textContent='NOTE SAVED IN THIS BROWSER ✦';await loadFeedback(true);}
+   catch{$('feedbackStatus').textContent='COULD NOT SAVE · YOUR DRAFT IS SAFE';}
+ });
  const tinyNotes=['You found a quiet corner. Stay as long as you need.','A half-finished idea is still alive. Keep it warm.','Today’s tiny quest: notice one beautiful accident.','Your save file contains more courage than you remember.','Some doors only appear after you stop looking for them.'];let noteIndex=0,noteTimer=0;
  function revealNote(next=false){clearInterval(noteTimer);if(next)noteIndex=(noteIndex+1)%tinyNotes.length;const text=tinyNotes[noteIndex],out=$('noteText');out.textContent='';$('noteEnvelope').setAttribute('aria-expanded','true');$('surpriseNote').classList.add('open');let i=0;noteTimer=setInterval(()=>{out.textContent=text.slice(0,++i);if(i>=text.length)clearInterval(noteTimer);},28);}
  $('noteEnvelope').onclick=()=>revealNote(false);$('anotherNote').onclick=()=>revealNote(true);
