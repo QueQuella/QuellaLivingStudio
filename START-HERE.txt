@@ -1,0 +1,17 @@
+Quella's Living Studio · Local preview
+
+1. Unzip the entire archive. Keep all files and folders together.
+2. macOS: double-click OPEN-WEBSITE.command (or run sh OPEN-WEBSITE.command in Terminal).
+   Windows: double-click OPEN-WEBSITE.bat.
+3. Your browser opens the site at http://127.0.0.1. Keep the small server window open.
+4. Press Ctrl+C in that window to stop the local preview.
+
+Python 3 is required. Do not double-click public/studio/index.html: browsers block
+the local file:// module import that renders the 3D Working Log.
+
+The local preview displays the art, animation and 3D scene. Feedback needs a
+deployed backend and database to share messages between visitors and let Quella
+reply. The included source has feedback APIs and a Cloudflare D1 migration; the
+Python preview does not provide that backend. Visit the hosted site for online
+feedback. Its current owner-only audience must be opened to visitors before
+others can submit messages.

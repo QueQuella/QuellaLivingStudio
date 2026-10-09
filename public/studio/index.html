@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080f10"><meta name="description" content="Explore Quella's Living Studio: a pixel world of visual journeys and working notes.">
+<title>Quella's Living Studio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23182030'/%3E%3Cpath d='M6 7h20v4h-4v4h4v10H6V15h4v-4H6z' fill='%23f3d779'/%3E%3Crect x='12' y='15' width='3' height='3' fill='%23182030'/%3E%3Crect x='18' y='15' width='3' height='3' fill='%23182030'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./journey.css"><link rel="stylesheet" href="./expansion.css"></head><body class="night">
+<header class="topbar">
+ <a class="brand" href="#home" aria-label="Return to exploration map">✦ QUELLA.OS</a>
+ <nav class="main-nav" aria-label="Main navigation"><a href="#visual">VISUAL JOURNEY</a><a href="#project">PROJECT</a><a href="#log">WORKING LOG</a><a href="#idea">IDEA PRESENTATION</a></nav>
+ <div class="right-nav"><a href="#feedback">FEEDBACK</a><a href="#about">ABOUT</a></div>
+</header>
+<main id="app">
+ <section id="home" class="view home-view" aria-label="Primary exploration map">
+ <div class="map-caption"><h1>GENERATIVE AI WORKFLOW FOR MEDIA ART</h1><p>Quella · Personal Living Studio</p></div>
+ <canvas id="world" aria-label="Click a building to walk to its entrance. Drag or scroll sideways to explore. Arrow keys or WASD also move the character."></canvas>
+ <div id="mapTargets" class="map-targets"></div>
+ <button id="gateEnter" class="pixel-key gate-enter" aria-label="Walk to and enter Visual Journey">ENTER ↵</button>
+ <button class="edge-pan left" id="panLeft" aria-label="Explore left edge">◀<span>EXPLORE</span></button>
+ <button class="edge-pan right" id="panRight" aria-label="Explore right edge">▶<span>EXPLORE</span></button>
+ <footer class="map-footer"><span>CLICK TO WALK · DRAG TO EXPLORE <span class="desktop-hint">· WASD / ARROWS</span></span><span id="mapStatus" role="status">CHOOSE A DESTINATION</span></footer>
+ </section>
+ <section id="visualMap" class="view journey-view" hidden aria-labelledby="journeyTitle">
+  <div id="journeyViewport" class="journey-viewport" tabindex="0" aria-label="Visual Journey map. Drag the background, swipe, or use arrow keys to explore.">
+   <div id="journeyWorld" class="journey-world">
+    <div class="journey-sparkles" aria-hidden="true"></div>
+    <header class="journey-intro"><p>QUELLA.OS / PLAYER'S ARCHIVE</p><h1 id="journeyTitle" tabindex="-1">Welcome To Quella's<br><em>Visual Journey.</em></h1><span>DRAG THE STARFIELD TO EXPLORE · 03 JOURNEYS ONLINE</span></header>
+
+    <section id="journeyCollection" class="j-collection journey-frame-target" aria-label="Visual Journey 01 works">
+     <div class="collection-corner top-left" aria-hidden="true">01</div><div class="collection-corner top-right" aria-hidden="true">✦</div><div class="collection-corner bottom-left" aria-hidden="true">HP</div><div class="collection-corner bottom-right" aria-hidden="true">↯</div>
+     <div class="collection-topline" aria-hidden="true"><span>QUELLA'S GAME PARK</span><i></i><span>2 / ∞</span></div>
+     <span class="j-sticker sticker-park" aria-hidden="true">★ GAME<br>PARK ★</span><span class="j-sticker sticker-avatar" aria-hidden="true"><img src="./assets/quella-retro-avatar-wink.png" alt=""></span><span class="j-sticker sticker-play" aria-hidden="true">♥ PLAY!</span>
+     <article id="journeyMain" class="j-work work-one">
+      <div class="j-player"><div class="j-player-bar"><span>▶ RETRO_TIME_MACHINE.P5</span><span>LIVE SIGNAL</span></div><iframe id="journeyArtwork" data-src="./art/index.html" title="Retro Time Machine — Quella's interactive p5.js artwork" allow="fullscreen" tabindex="0"></iframe><div class="j-player-controls"><span>CLICK / SPACE = TIME WARP</span><button id="journeyReload" aria-label="Restart artwork">↻</button></div></div>
+      <footer class="j-work-caption"><h2>TIME TRAVEL</h2><time datetime="2026-09">2026 / 9</time><p>A live pixel journey through drifting memories and accelerated time.</p><a href="https://editor.p5js.org/QueQuella/sketches/v3DsFC2gH" target="_blank" rel="noopener noreferrer">OPEN THE P5.JS WORK ↗</a></footer>
+     </article>
+     <div class="j-inner-divider" aria-hidden="true"><i></i><span>✦ WORK 002 ✦</span><i></i></div>
+     <article id="journeySecond" class="j-work work-two">
+      <div class="j-player"><div class="j-player-bar"><span>▶ TIME_TRAVELER_PART2.EXE</span><span>LIGHT SPEED / LIVE</span></div><iframe id="journeyPart2" data-src="./art/part2/index.html" title="time traveler_part2 — an interactive 16 by 9 light-beam artwork" tabindex="0"></iframe><div class="j-player-controls"><span>MOVE THE WAND = BEND THE TIME RIFT</span><button id="journeyReload2" aria-label="Restart time traveler part two">↻</button></div></div>
+      <footer class="j-work-caption"><h2>TIME TRAVELER_PART2</h2><time datetime="2026-09">2026 / 9</time><p>A live 16:9 light corridor where cyan and red beams rush through a shifting temporal seam.</p></footer>
+     </article>
+     <div class="collection-bottomline" aria-hidden="true"><span>JOURNEY 01 COMPLETE</span><i></i></div>
+    </section>
+    <aside class="j-note j-reference-note" aria-label="References and tools for Time Travel">
+     <span class="note-edge-sticker" aria-hidden="true">PIXEL<br>PLAYGROUND</span><div class="j-note-tabs" aria-hidden="true"><i></i><i></i><i></i></div><p class="j-note-label">WORK 001 / FIELD NOTE</p><h2>Visual references</h2><a href="https://p5js.org/examples/" target="_blank" rel="noopener noreferrer">p5.js examples ↗</a><a href="https://art.teleportacia.org/#CenterOfTheUniverse" target="_blank" rel="noopener noreferrer">Olia Lialina's web universe ↗</a><h2>Tools</h2><a href="https://editor.p5js.org/QueQuella/sketches/v3DsFC2gH" target="_blank" rel="noopener noreferrer">p5.js Web Editor ↗</a><a href="https://p5js.org/reference/" target="_blank" rel="noopener noreferrer">p5.js reference ↗</a><p class="j-note-small">A tiny machine for stretching a second into a century.</p>
+    </aside>
+    <div class="j-sprite sprite-moon" aria-hidden="true"></div><div class="j-sprite sprite-portal" aria-hidden="true"></div><div class="j-sprite sprite-flowers" aria-hidden="true"></div><div class="j-sprite sprite-sparkles" aria-hidden="true"></div><div class="j-sprite sprite-saturn" aria-hidden="true"></div>
+    <div class="j-game-sign sign-one" aria-hidden="true">HP ✦✦✦<br>MEMORY SLOT 01</div><div class="j-game-sign sign-two" aria-hidden="true">SAVE POINT<br>SEPTEMBER 2026</div>
+    <aside class="j-cinema-note" aria-label="Visual reference for time traveler part two"><span class="cinema-sticker" aria-hidden="true">★ ARCADE<br>DREAM ★</span><div class="cinema-pin" aria-hidden="true">☺</div><figure><img src="./assets/time-traveler-reference.jpg" alt="Abstract cyan, white and red light rays used as a visual reference"><figcaption>by 2001: A Space Odyssey</figcaption></figure></aside>
+    <div class="j-sprite sprite-castle" aria-hidden="true"></div><div class="j-sprite sprite-nebula" aria-hidden="true"></div>
+    <div class="j-game-sign sign-three" aria-hidden="true">PORTAL 02<br>BEAM COUNT 64</div>
+    <section id="journeyCollection02" class="journey-ref-frame journey-ref-two journey-frame-target" aria-labelledby="journey02Title">
+     <div class="ref-corner ref-tl" aria-hidden="true">02</div><div class="ref-corner ref-tr" aria-hidden="true">CG</div><div class="ref-corner ref-bl" aria-hidden="true">▶</div><div class="ref-corner ref-br" aria-hidden="true">✦</div>
+     <header class="ref-frame-head"><p>VISUAL JOURNEY 02</p><h2 id="journey02Title">CGI ART / VIDEO ART / ANIMATION</h2><span>2026 / 09 · FIVE SIGNALS</span></header>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-tv"><span class="ref-fallback" aria-hidden="true">TV<br>BUDDHA</span><img src="https://njpart.ggcf.kr/storage/upload/2023/02/09/bnsjMxzDZoowPFWzxjYYQ3TwdVV3kyLOT3lg6TlI.jpg" alt="Nam June Paik's TV Buddha installation" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://njpart.ggcf.kr/collections/205" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>TV BUDDHA — NAM JUNE PAIK, 1974</h3><p>- Video sculpture: a Buddha watches its live image on a television.</p><p class="ref-learn">- Learn: build a closed feedback loop between object, camera and screen.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 02</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-drome"><span class="ref-fallback" aria-hidden="true">MOVIE<br>DROME</span><img src="https://www.moma.org/media/W1siZiIsIjUzNzA2OCJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA5MCAtcmVzaXplIDIwMDB4MjAwMFx1MDAzZSJdXQ.jpg?sha=1bd6a95eca29cd73" alt="Stan VanDerBeek's Movie-Drome" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.moma.org/collection/works/273553" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>MOVIE-DROME — STAN VANDERBEEK, 1964–65</h3><p>- A dome filled with simultaneous films and slides instead of one fixed screen.</p><p class="ref-learn">- Learn: treat projection as spatial architecture, not a flat image.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 03</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-emissaries"><span class="ref-fallback" aria-hidden="true">LIVE<br>WORLD</span><img src="https://www.moma.org/d/assets/W1siZiIsIjIwMTcvMDEvMjYvN2FrNG42eDZpb19MZWFkSW1hZ2VfRUZBUF9TQ1JFRU5TSE9UX0hVR0VSRVNfMDFfQUxULmpwZyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA5MCAtcmVzaXplIDIwMDB4NjY3XiAtZ3Jhdml0eSBDZW50ZXIgLWNyb3AgMjAwMHg2NjcrMCswIl1d/LeadImage_EFAP_SCREENSHOT_HUGERES_01_ALT.jpg?sha=fcdc1a34146d60ed" alt="Ian Cheng's Emissaries simulated world" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.moma.org/calendar/exhibitions/3656" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>EMISSARIES — IAN CHENG, 2015–17</h3><p>- Game-engine ecosystems unfold through agents, rules and unstable stories.</p><p class="ref-learn">- Learn: let a world behave beyond the artist's direct control.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 04</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-geomancer"><span class="ref-fallback" aria-hidden="true">AI<br>SATELLITE</span><img src="./assets/week05/geomancer.jpg" alt="Lawrence Lek's CGI film Geomancer" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://zkm.de/en/artwork/geomancer" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>GEOMANCER — LAWRENCE LEK, 2017</h3><p>- A CGI film follows an AI satellite that wants to become an artist.</p><p class="ref-learn">- Learn: use a game engine to stage atmosphere, memory and machine identity.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 05</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-laturbo"><span class="ref-fallback" aria-hidden="true">VIRTUAL<br>SELF</span><img src="https://cdn.prod.website-files.com/62ee0bbe0c783a903ecc0ddb/6472a4723ea0d9389807388c_laturbo11-230x300.jpeg" alt="LaTurbo Avedon's virtual avatar" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.laturboavedon.com/" target="_blank" rel="noopener noreferrer">OPEN ARTIST WORLD ↗</a><h3>LATURBO AVEDON — 2008–PRESENT</h3><p>- A virtual avatar exists as both artist and artwork across online worlds.</p><p class="ref-learn">- Learn: make the avatar an ongoing identity, not only a character model.</p></div>
+     </article>
+     <footer class="ref-frame-foot"><span>END OF JOURNEY 02</span><i></i><b>CONTINUE ↓</b></footer>
+    </section>
+
+    <section id="journeyCollection03" class="journey-ref-frame journey-ref-three journey-frame-target" aria-labelledby="journey03Title">
+     <div class="ref-corner ref-tl" aria-hidden="true">03</div><div class="ref-corner ref-tr" aria-hidden="true">IX</div><div class="ref-corner ref-bl" aria-hidden="true">♥</div><div class="ref-corner ref-br" aria-hidden="true">↯</div>
+     <header class="ref-frame-head"><p>VISUAL JOURNEY 03</p><h2 id="journey03Title">INTERACTIVE ART &amp; GAME ART</h2><span>2026 / 09 · FIVE LIVING SYSTEMS</span></header>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-avolve"><span class="ref-fallback" aria-hidden="true">A-VOLVE<br>1994</span><img src="./assets/week05/a-volve.jpg" alt="A-Volve interactive artificial-life installation" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.ntticc.or.jp/en/archive/works/a-volve/" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>A-VOLVE — SOMMERER &amp; MIGNONNEAU, 1994</h3><p>- Visitors draw creatures, release them into a virtual pool and alter their survival.</p><p class="ref-learn">- Learn: connect simple input to a living system with visible consequences.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 02</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-body"><span class="ref-fallback" aria-hidden="true">BODY<br>MOVIES</span><img src="https://www.lozano-hemmer.com/image_sets/body_movies/hongkong_2006/bodymovies_hongkong_01_t.jpg" alt="Rafael Lozano-Hemmer's Body Movies" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.lozano-hemmer.com/body_movies.php" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>BODY MOVIES — RAFAEL LOZANO-HEMMER, 2001</h3><p>- Passers-by reveal portraits by moving enlarged shadows across a public façade.</p><p class="ref-learn">- Learn: make the participant's body both controller and image.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 03</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-night"><span class="ref-fallback" aria-hidden="true">NIGHT<br>JOURNEY</span><img src="https://images.squarespace-cdn.com/content/v1/59ad778ee6f2e1ebbce682fb/1505971166636-GKIIRWCM39IDZ394ZRAA/NightJourney_windyTrees.jpg" alt="The Night Journey experimental art game" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.thenightjourney.com/" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>THE NIGHT JOURNEY — BILL VIOLA + USC, 2007–18</h3><p>- A slow, dreamlike game turns wandering into a journey toward enlightenment.</p><p class="ref-learn">- Learn: let movement, pace and atmosphere carry meaning without goals.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 04</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-rmb"><span class="ref-fallback" aria-hidden="true">RMB<br>CITY</span><img src="https://www.moma.org/d/c/installation_images/W1siZiIsIjQzMzQ2NCJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA5MCAtcmVzaXplIDEyMDB4NjAwXHUwMDNlIl1d.jpg?sha=31ba0f3425d4f704" alt="Cao Fei exhibition view featuring RMB City" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.mplus.org.hk/en/collection/objects/rmb-city-201286/" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>RMB CITY — CAO FEI, 2007–11</h3><p>- A surreal Second Life city became a platform for events and virtual life.</p><p class="ref-learn">- Learn: design a world as a social stage that keeps changing after launch.</p></div>
+     </article>
+     <div class="ref-divider" aria-hidden="true"><i></i><span>✦ SIGNAL 05</span><i></i></div>
+     <article class="journey-ref-row">
+      <div class="ref-media ref-everything"><span class="ref-fallback" aria-hidden="true">EVERY<br>THING</span><img src="https://www.irishtimes.com/resizer/v2/EWZIWMC5HMB5QDO6U5G7D3EERM.jpg?auth=988987405b18ab76b4c3c24b3f0272a2b4b0d12856508558705f0c91ef1585f3&amp;height=450&amp;width=800" alt="David OReilly's game Everything" loading="lazy"></div>
+      <div class="ref-copy"><a href="https://www.doublefine.com/games/everything" target="_blank" rel="noopener noreferrer">OPEN WORK / SOURCE ↗</a><h3>EVERYTHING — DAVID OREILLY, 2017</h3><p>- Players can become animals, objects, planets or galaxies in one universe.</p><p class="ref-learn">- Learn: use perspective-switching to turn interaction into an idea.</p></div>
+     </article>
+     <footer class="ref-frame-foot"><span>END OF JOURNEY 03</span><i></i><b>ARCHIVE SAVED ✦</b></footer>
+    </section>
+
+    <div class="map-zone-label zone-own">01 / MY EXPERIMENTS</div>
+    <div class="map-zone-label zone-references">02 + 03 / VISUAL REFERENCES</div>
+    <aside class="jodi-card journey-frame-target" aria-label="Visual Journey 03 extra reference: JODI Untitled Game">
+     <p class="pixel-kicker">JOURNEY 03 / EXTRA LIFE</p><a href="https://www.eai.org/titles/untitled-game" target="_blank" rel="noopener">OPEN WORK / EAI</a>
+     <img src="./assets/week05/jodi.jpg" alt="JODI Untitled Game screenshot" loading="lazy">
+     <h2>JODI — <em>Untitled Game</em></h2><time>1996–2001 / QUAKE MODS</time>
+     <p>- Altered code strips the game into disorienting abstract space.</p><p>- Learn: expose the engine through errors that unsettle the player's sense of control.</p>
+     <a href="#log" data-log-slot="3">READ MY RESPONSE</a>
+    </aside>
+    <aside class="journey-library journey-frame-target" aria-labelledby="readingShelfTitle">
+     <p class="pixel-kicker">READING / SAVE DATA</p><h2 id="readingShelfTitle">Books in orbit</h2>
+     <div class="reading-shelf">
+      <a href="https://www.openhumanitiespress.org/books/titles/ai-art/" target="_blank" rel="noopener"><img src="./assets/week05/ai-art.jpg" alt="AI Art book cover"><strong>AI Art</strong><span>Joanna Zylinska</span></a>
+      <a href="https://www.scribd.com/document/47831705/Internet-Art-Rachel-Greene" target="_blank" rel="noopener"><img src="./assets/week05/internet-art.jpeg" alt="Internet Art book cover"><strong>Internet Art</strong><span>Rachel Greene</span></a>
+      <a href="https://www.bloomsbury.com/us/unstable-aesthetics-9781501364907/" target="_blank" rel="noopener"><img src="./assets/week05/unstable-aesthetics.jpg" alt="Unstable Aesthetics book cover"><strong>Unstable Aesthetics</strong><span>Eddie Lohmeyer</span></a>
+     </div><a class="shelf-reading-link" href="#log">OPEN READING RESPONSES</a>
+    </aside>
+    <a class="journey-project journey-frame-target" href="#project"><p class="pixel-kicker">PROJECT / LEVEL SELECT</p><img src="./assets/week05/programming-dream.png" alt="Programming Dream starting interface, a computer floating on a dreamlike sea"><h2>Programming Dream</h2><p>A digital living system, learning to inhabit a dream.</p><span>ENTER PROJECT</span></a>
+    <div class="j-work-divider divider-after" aria-hidden="true"><i></i><span>NEXT PORTAL · STILL DREAMING</span><i></i></div>
+   </div>
+  </div>
+  <button id="journeyLocate" class="journey-locate" type="button" hidden aria-label="Locate the Visual Journey works"><span aria-hidden="true">✿</span> Locate</button>
+ </section>
+ <section id="archive" class="view archive-view" hidden>
+ <div class="section-heading"><p id="archiveKicker">THE LOST GAME ARCHIVE</p><h1 id="archiveTitle" tabindex="-1">VISUAL JOURNEY</h1><span id="archiveHint">SCROLL FREELY · CLICK ANY CARTRIDGE</span></div>
+ <a id="archiveNext" class="section-next" href="#log">CONTINUE TO WORKING LOG ↗</a>
+ <div id="vhsScene" class="vhs-scene" aria-label="3D VHS archive. Drag to orbit, click a tape to play."><p class="vhs-scene-status">LOADING 3D ARCHIVE…</p></div>
+ <div id="vhsDeck" class="vhs-deck" hidden aria-hidden="true"><div class="vhs-deck-top"><span>QUELLA · MEMORY SYSTEM</span><i>VHS</i></div><div class="vhs-slot"><span>INSERT A WORKING LOG TAPE</span></div><div class="vhs-deck-controls"><b>● REC</b><span>▰▰ ▶ ▣ ◀</span><em>00:00:00</em></div></div>
+ <div id="carousel" class="carousel" aria-roledescription="carousel" aria-label="Archive slots"><svg id="orbitLines" class="orbit-lines" aria-hidden="true"><path id="orbitBack"/><path id="orbitFront"/></svg><div id="cardTrack" class="card-track"></div></div>
+ <button id="prevCard" class="arrow prev" aria-label="Previous slot">◀</button><button id="nextCard" class="arrow next" aria-label="Next slot">▶</button>
+ <canvas id="timeline" role="slider" tabindex="0" aria-label="Archive time ruler; drag to scrub, use left and right arrows to move" aria-valuemin="1" aria-valuemax="24" aria-valuenow="1" hidden></canvas>
+ <div id="staticTip" class="static-tip" aria-hidden="true">RUB ME FOR A TINY STATIC SPARK! ⚡</div>
+ <div id="timelineTicks" class="timeline-ticks" aria-label="Choose a dated note" hidden></div>
+ <div class="archive-meta"><span id="slotNumber"></span><div class="summary-line"><svg id="summaryArrow" width="52" height="40" aria-hidden="true"><path d="M4 1 V29 H46 M38 21 L46 29 L38 37" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4"/></svg><h2 id="slotSummary"></h2></div><p id="slotInfo"></p></div>
+ <div class="archive-actions"><p>DRAG / TRACKPAD · ← →</p><button id="openSlot" class="pixel-key">OPEN FILE ↵</button></div>
+ </section>
+ <section id="detail" class="view detail-view" hidden>
+ <button id="backArchive" class="back-link">← RETURN TO ARCHIVE</button>
+ <a id="detailNext" class="section-next" href="#about">MEET QUELLA ↗</a>
+ <div class="detail-scroll" id="detailScroll"><header class="detail-header"><p id="detailKicker"></p><h1 id="detailTitle" tabindex="-1"></h1><span id="detailHint">SCROLL TO EXPLORE ↓</span></header><div id="detailSections"></div></div>
+ <canvas id="logMascot" class="log-mascot" aria-hidden="true" hidden></canvas>
+ <svg class="data-strip" id="dataStrip" aria-hidden="true"><path id="stripShadow"/><path id="stripPath"/></svg>
+ </section>
+
+ <section id="ideaSettings" class="view idea-settings" hidden aria-labelledby="ideaTitle">
+ <div class="dream-presentation">
+ <header class="dream-cover"><p class="dream-kicker">IDEA PRESENTATION · 2026</p><h1 id="ideaTitle" tabindex="-1">PROGRAMMING DREAM</h1><p class="dream-subtitle">An Interactive World Between Human Imagination and Machine Interpretation</p><p class="dream-meta">6 Slides · 5–6 Minutes</p></header>
+ <hr class="dream-divider">
+ <section class="dream-section" aria-labelledby="dream-01"><p class="dream-kicker">01 / THE IDEA</p><h2 id="dream-01">WHAT IF A DRAWING COULD COME ALIVE?</h2><p class="dream-project-name"><strong>PROGRAMMING DREAM</strong><br><em>Drawing Life into a Digital Dream</em></p><p><em>Programming Dream</em> is an interactive 3D experience that combines human creativity, deep learning, and a dreamlike virtual environment. Players explore an endless ocean, draw abstract patterns, and watch their drawings become digital creatures through AI interpretation.</p><p class="dream-pipeline">EXPLORE → DRAW → INTERPRET → BRING TO LIFE</p><figure class="dream-ocean"><img src="./assets/week05/programming-dream.png" alt="Programming Dream concept: dreamcore ocean with a floating computer"></figure></section>
+ <hr class="dream-divider">
+ <section class="dream-section" aria-labelledby="dream-02"><p class="dream-kicker">02 / MOTIVATION</p><h2 id="dream-02">CAN AI BECOME A CREATIVE PARTNER?</h2><p>During an NVIDIA Deep Learning workshop, I learned about Convolutional Neural Networks (CNNs) and image classification. This made me curious about how machine learning could become part of an artistic experience, rather than simply a technical tool. I want to explore what happens when human imagination meets machine interpretation, especially when the AI understands something differently from what the player intended.</p><div class="dream-grid three"><article><h3>HUMAN IMAGINATION</h3><p>Players express ideas through simple drawings.</p></article><article><h3>MACHINE INTERPRETATION</h3><p>A trained AI model interprets the visual patterns.</p></article><article><h3>UNEXPECTED RESULTS</h3><p>Different interpretations create new possibilities.</p></article></div><p class="dream-note"><strong>Central Interest:</strong> Human–AI collaboration, machine perception, and creative uncertainty.</p></section>
+ <hr class="dream-divider">
+ <section class="dream-section" aria-labelledby="dream-03"><p class="dream-kicker">03 / INSPIRATION</p><h2 id="dream-03">ARTIFICIAL LIFE &amp; LIVING VIRTUAL WORLDS</h2><p>My project is inspired by interactive artworks that explore artificial life and the relationship between humans and digital organisms. Both references demonstrate how computational systems can transform virtual creatures from simple visual objects into living, responsive experiences.</p><div class="dream-grid references"><article><img src="./assets/week05/emissaries.jpg" alt="Ian Cheng, Emissaries installation at MoMA; photograph by Pablo Enriquez" loading="lazy"><div class="dream-ref-copy"><h3>01 — EMISSARIES</h3><p class="dream-artist"><strong>Ian Cheng (2015–2017)</strong><br><em>Live Simulation / Game Engine Art</em></p><p>A series of self-running simulations in which virtual characters interact within unpredictable digital ecosystems. It inspires me to create a virtual environment where creatures can exist and behave independently.</p><a href="https://iancheng.com/emissaries" target="_blank" rel="noopener noreferrer">View Artwork ↗</a></div></article><article><img src="./assets/week05/a-volve.jpg" alt="Christa Sommerer and Laurent Mignonneau, A-Volve interactive water installation" loading="lazy"><div class="dream-ref-copy"><h3>02 — A-VOLVE</h3><p class="dream-artist"><strong>Christa Sommerer &amp; Laurent Mignonneau (1994)</strong><br><em>Interactive Installation / Artificial Life</em></p><p>Visitors draw shapes on a touchscreen to create virtual organisms that swim and interact in a water environment. It directly inspires my drawing-to-creature interaction and the idea of giving digital forms a sense of life.</p><a href="https://interface.ufg.ac.at/christa-laurent/A-Volve.html" target="_blank" rel="noopener noreferrer">View Artwork ↗</a></div></article></div><p class="dream-note"><strong>My Direction:</strong> Combining the living virtual worlds of <em>Emissaries</em> with the drawing-based interaction of <em>A-Volve</em>, while introducing CNN image classification and a surreal, dreamcore environment. <a href="https://www.moma.org/calendar/exhibitions/3656" target="_blank" rel="noopener noreferrer">The Museum of Modern Art</a></p></section>
+ <hr class="dream-divider">
+ <section class="dream-section" aria-labelledby="dream-04"><p class="dream-kicker">04 / PATHWAY &amp; PLAN</p><h2 id="dream-04">FROM DRAWING TO DIGITAL LIFE</h2><p class="dream-label">SELECTED PATHWAY — GAME ENGINE &amp; INTERACTIVE MEDIA</p><p>I will develop a small interactive prototype in Unreal Engine 5.6. The player enters a dreamlike ocean, approaches a floating computer, and draws an abstract pattern. A trained CNN interprets the drawing and identifies a creature type. After confirmation, the corresponding 3D creature appears in the ocean, where the player can observe it and continue exploring.</p><h3 class="dream-grid-label">PLAYER EXPERIENCE</h3><div class="dream-grid three"><article><h3>01 — EXPLORE</h3><p>Discover the floating computer in a surreal ocean.</p><strong>3D Environment</strong></article><article><h3>02 — CREATE</h3><p>Draw a pattern and let AI classify it.</p><strong>Drawing UI + CNN</strong></article><article><h3>03 — BRING TO LIFE</h3><p>Spawn a creature, explore, and repeat.</p><strong>Real-time Interaction</strong></article></div><p class="dream-note"><strong>FINAL OUTCOME</strong><br>One explorable environment · One AI drawing interface · Six low-poly creatures · One complete interaction loop</p></section>
+ <hr class="dream-divider">
+ <section class="dream-section" aria-labelledby="dream-05"><p class="dream-kicker">05 / TOOLS &amp; AI</p><h2 id="dream-05">CONNECTING ART, AI &amp; GAME DESIGN</h2><p>The production combines 3D modelling, deep learning, and real-time interaction. I will create the environment and six low-poly creatures in Blender, develop the interactive experience using Unreal Engine and Blueprints, and train a CNN in Python to recognise abstract drawings. The trained model will then be connected to Unreal Engine so that each prediction can trigger the appearance of a corresponding creature.</p><h3 class="dream-grid-label">PRODUCTION WORKFLOW</h3><div class="dream-grid three"><article><h3>01 — 3D DESIGN</h3><strong>Blender + Unreal Engine 5.6</strong><p>Environment, creatures, lighting, and animation.</p></article><article><h3>02 — AI TRAINING</h3><strong>Python + PyTorch + JupyterLab</strong><p>Drawing dataset, CNN training, and data augmentation.</p></article><article><h3>03 — INTERACTIVE SYSTEM</h3><strong>UE5 Blueprints + Model Inference</strong><p>Drawing interface, prediction results, and creature spawning.</p></article></div><h3 class="dream-grid-label">ROLE OF AI</h3><p class="dream-pipeline">DRAWING → CNN CLASSIFICATION → PREDICTED LABEL → 3D CREATURE</p><p class="dream-note">AI acts as an <strong>interpreter, not a 3D generator</strong>. I design the creatures and their environment, while the trained model recognises the player's drawing and selects which creature appears.</p></section>
+ <hr class="dream-divider">
+ <section class="dream-section" aria-labelledby="dream-06"><p class="dream-kicker">06 / QUESTIONS &amp; CHALLENGES</p><h2 id="dream-06">WHEN DOES AI BECOME MORE THAN A TOOL?</h2><p>The main challenge is balancing technical accuracy with artistic experience. The CNN needs to recognise different drawing styles, the AI model must communicate with Unreal Engine, and the interaction should feel creative rather than like a simple classification test. I want to explore how both successful and unexpected interpretations can contribute to the experience.</p><div class="dream-grid three"><article><h3>AI RECOGNITION</h3><p>How can the model recognise different drawing styles?</p><strong>Dataset &amp; Accuracy</strong></article><article><h3>TECHNICAL INTEGRATION</h3><p>How can AI predictions work smoothly inside UE5?</p><strong>Real-time Inference</strong></article><article><h3>CREATIVE EXPERIENCE</h3><p>How can machine interpretation become playful and meaningful?</p><strong>Interaction &amp; Feedback</strong></article></div><div class="dream-closing"><p class="dream-kicker">THE OPEN QUESTION</p><h3>Can the difference between what we imagine and what AI understands become a new form of creative expression?</h3><p><em>Programming Dream explores a world where human imagination begins the process, machine interpretation shapes the result, and digital life emerges.</em></p><p class="dream-thanks">THANK YOU.</p></div></section>
+ </div>
+ </section>
+ <section id="projectLevels" class="view project-levels" hidden aria-labelledby="projectTitle"><header><p>PROJECT / LEVEL SELECT</p><h1 id="projectTitle">Programming Dream</h1><p>A small AI art experiment in a digital living system.</p></header><div class="level-grid"><article class="level-card"><img src="./assets/week05/programming-dream.png" alt="Dream-core sea and floating computer interface"><div><span>LEVEL 01 / CONCEPT</span><h2>The floating computer</h2><p>A computer drifts with the waves. Clicking it opens a drawing interface, where a model's prediction gives a creature its place in the dream.</p><a href="#idea">OPEN PROPOSAL / 6 SLIDES</a></div></article><article class="level-card planned"><span>LEVEL 02 / IN DEVELOPMENT</span><h2>The living system</h2><p>Draw a pattern. See the prediction. Meet the creature. Explore through its body.</p><p>The model and Unreal Engine connection are part of the production plan.</p></article></div></section>
+ <section id="empty" class="view empty-view" hidden><p id="emptyKicker">UNFILLED SPACE</p><h1 id="emptyTitle" tabindex="-1"></h1><div class="empty-content" aria-label="Content intentionally left empty"></div><a href="#home" class="back-link">← RETURN TO MAP</a><a href="#idea" id="projectNext" class="section-next" hidden>EXPLORE IDEA PRESENTATION ↗</a></section>
+ <section id="feedback" class="view feedback-view" hidden aria-labelledby="feedbackTitle">
+  <canvas id="feedbackStars" aria-hidden="true"></canvas>
+  <div class="feedback-desktop">
+   <div class="desktop-bar"><span>QUELLA FEEDBACK ROOM 2000</span><div><i></i><i></i><i></i></div></div>
+   <aside class="avatar-console">
+    <div class="avatar-poster animated-avatar"><img class="avatar-open" src="./assets/quella-retro-avatar.png" alt="Quella's retro anime-style digital garden avatar"><img class="avatar-wink" src="./assets/quella-retro-avatar-wink.png" alt=""><img class="avatar-kiss" src="./assets/quella-retro-avatar-kiss.png" alt=""><span class="kiss-hearts" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i></span></div>
+    <div class="avatar-stats"><strong>QUELLA</strong><span>ONLINE · DIGITAL GARDEN KEEPER</span><a href="#about">VISIT MY ABOUT PAGE ↗</a></div>
+    <div class="buddy-status">✦ waiting for a message…</div>
+   </aside>
+   <section class="chat-console">
+    <header><div><p>FEEDBACK.EXE</p><h1 id="feedbackTitle" tabindex="-1">Leave a message</h1></div><span id="feedbackConnection">CONNECTING…</span></header>
+    <div id="feedbackList" class="feedback-list" aria-live="polite"><p class="feedback-loading">Opening the message archive…</p></div>
+    <form id="feedbackForm" class="feedback-form">
+     <label>SCREEN NAME<input id="feedbackName" name="name" maxlength="40" autocomplete="nickname" required placeholder="Your name"></label>
+     <label>MESSAGE<textarea id="feedbackMessage" name="message" maxlength="1200" required placeholder="Type your feedback here…"></textarea></label>
+     <div class="feedback-form-row"><span id="feedbackStatus" role="status">READY TO SEND</span><button class="pixel-key" type="submit">SEND MESSAGE ↵</button></div>
+    </form>
+   </section>
+  </div>
+  <a href="#home" class="feedback-home">← RETURN TO MAP</a>
+ </section>
+ <section id="about" class="view about-view" hidden>
+  <canvas id="starfield" aria-label="A gently twinkling star field"></canvas>
+  <div class="about-universe">
+   <p class="universe-coordinates">YOU ARE HERE / QUELLA'S CORNER OF THE INTERNET</p>
+   <div class="cosmic-layout">
+    <aside class="old-window link-window"><div class="window-title">HYPERLINKS.EXE</div><a href="#home">return to the garden</a><a href="#visual">look at something</a><a href="#log">read a stray thought</a><a href="#project">follow a project</a><a href="https://quequella.github.io/Quella.github.io/" target="_blank" rel="noreferrer">Quella's portfolio ↗</a><span class="tiny-star">✦</span><p>Every link is<br>another little door.</p></aside>
+    <article class="old-window profile-window"><div class="window-title">ABOUT / PLAYER 01 <span>✧</span></div><div class="profile-inner">
+      <p class="welcome-text">welcome to</p><h1 id="aboutTitle" tabindex="-1">Quella's<br><em>small universe</em></h1>
+      <figure class="avatar-frame video-avatar"><video src="./assets/portrait-interaction-web.mp4" autoplay muted loop playsinline aria-label="Quella's looping interactive pixel portrait"></video><figcaption>INTERACTIVE PORTRAIT · LOOP 01</figcaption></figure>
+      <p>Hi, I'm Quella.</p><p>This is my Personal Living Studio for<br><strong>Generative AI Workflow for Media Art.</strong></p>
+      <p class="profile-note">A place for things I make,<br>things I notice, and things still becoming.</p>
+      <div class="profile-links"><a href="#visual">visual journey</a> · <a href="#log">working notes</a> · <a href="#feedback">leave feedback</a></div>
+    </div></article>
+    <aside class="old-window satellite-window"><div class="window-title">SOMEWHERE NEARBY</div><p>✳ &nbsp; PERSONAL WEB SPACE</p><p>still growing.<br>still connected.</p><a href="#idea">ideas in orbit ↗</a><div class="orbital-note">✦<br>no final version<br>of a small universe.</div></aside>
+   </div>
+   <footer class="universe-footer"><span>PERSONAL LIVING STUDIO / QUELLA</span></footer>
+  </div>
+ </section>
+ <section id="secret" class="view secret-view" hidden>
+  <a href="#home" class="back-link secret-default-home">← RETURN TO MAP</a>
+  <div id="surpriseRoom" class="secret-room note-room" hidden><div class="secret-window"><div class="window-title">LEFT FLAG / SURPRISE_NOTE.EXE</div><button id="noteEnvelope" class="pixel-envelope" aria-expanded="false"><span>✦</span><b>OPEN ME</b></button><article id="surpriseNote" class="surprise-note" aria-live="polite"><p id="noteText"></p><button id="anotherNote" class="pixel-key">ANOTHER NOTE ↻</button></article></div></div>
+  <div id="gameRoom" class="secret-room game-room pixel-world-room" hidden>
+   <iframe id="pixelWorldFrame" class="pixel-world-frame" data-src="./pixel-world/index.html" title="Pixel World trackpad explorer"></iframe>
+   <a href="#home" class="journey-locate pixel-world-home"><span aria-hidden="true">⌂</span> Home</a>
+   <div hidden aria-hidden="true"><canvas id="miniGame" width="1" height="1"></canvas><span id="gameScore"></span><button id="restartGame" type="button"></button></div>
+  </div>
+ </section>
+</main>
+<div id="magicCursor" aria-hidden="true"></div>
+<div class="crt" aria-hidden="true"></div>
+<script src="./vendor/mermaid.min.js"></script><script src="./engine.js"></script><script src="./notes.js"></script><script src="./entries.js"></script><script src="./week05-entry.js"></script><script src="./expansion.js"></script><script src="./journey.js"></script><script src="./script.js"></script>
+<script>if(location.protocol==='file:'){const notice=document.querySelector('#vhsScene .vhs-scene-status');if(notice)notice.textContent='To load the 3D archive, use OPEN-WEBSITE.command (Mac) or OPEN-WEBSITE.bat (Windows) in the ZIP folder.';}</script>
+<script type="module" src="./vhs-scene.js"></script>
+</body></html>
