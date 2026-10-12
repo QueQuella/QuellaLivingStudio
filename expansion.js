@@ -11,6 +11,7 @@
   const boundary=presentation.getBoundingClientRect().top+topOffset()+30;
   let selected=0;
   slides.forEach((slide,i)=>{if(slide.getBoundingClientRect().top<=boundary)selected=i;});
+  if(presentation.scrollTop>0&&presentation.scrollTop+presentation.clientHeight>=presentation.scrollHeight-2)selected=slides.length-1;
   markSlide(selected);
  }
  let queued=false;
