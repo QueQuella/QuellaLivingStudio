@@ -24,6 +24,33 @@
 @media(max-width:900px){.settings-layout{grid-template-columns:1fr}.slide-menu{flex-direction:row;overflow-x:auto;gap:10px;padding:0}.slide-menu button{flex:0 0 140px;padding:10px;font-size:12px}.slide-menu button span{font-size:15px}#ideaSlide{padding:26px}.settings-header{gap:12px}.settings-header span{margin-left:0}.deck-title{grid-template-columns:1fr}.deck-title img{max-height:300px;object-fit:contain}.level-grid{grid-template-columns:1fr}.archive-card.note{width:190px;height:290px}}
 @media(max-width:600px){.inspiration-pair,.motivation-content,.production-grid,.question-layout,.pathway{grid-template-columns:1fr}.inspiration-pair img{height:210px}.production-grid aside{border:0;padding:0}.idea-settings{padding:22px 16px}#ideaSlide{padding:23px 18px;min-height:600px}.slide-controls{gap:12px}.slide-controls a{margin:0}.project-levels{padding:30px 20px}.project-levels h1{font-size:28px}.markdown-body{font-size:16px}.markdown-body h1{font-size:24px}.archive-card.note{height:280px;width:190px}}
 
+/* Project archive: the entire post is one navigable card. */
+.project-levels{background:radial-gradient(circle at 75% 0%,#234441 0%,#0c1719 55%);padding:clamp(32px,6vw,80px) clamp(20px,8vw,130px)}
+.project-levels>header{max-width:1080px;margin:0 auto 34px}
+.project-levels>header>p:first-child{font:12px 'Silkscreen',monospace;letter-spacing:.14em;color:#b6d7c9}
+.project-levels h1{font-size:clamp(32px,4vw,54px);margin:10px 0}
+.project-posts{max-width:1080px;margin:auto}
+.project-post{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);min-height:350px;color:#e7eee4;text-decoration:none;background:#152723;border:1px solid #829e90;box-shadow:10px 10px 0 #061011;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.project-post:hover,.project-post:focus-visible{transform:translateY(-6px);box-shadow:13px 18px 0 #061011;border-color:#d4e5be}
+.project-post:focus-visible{outline:3px solid #f4ebbe;outline-offset:5px}
+.project-post-image{position:relative;overflow:hidden;min-height:350px;background:#153536}
+.project-post-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center;filter:saturate(.85);transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .5s}
+.project-post:hover img,.project-post:focus-visible img{transform:scale(1.06);filter:saturate(1.12)}
+.project-post-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,20,21,.55),transparent 50%);pointer-events:none}
+.project-post-image-cue{position:absolute;z-index:1;bottom:22px;left:24px;padding:9px 12px;border:1px solid rgba(230,250,229,.75);font:11px 'Silkscreen',monospace;letter-spacing:.06em;background:rgba(4,21,23,.55);transition:background .3s,transform .3s}
+.project-post:hover .project-post-image-cue,.project-post:focus-visible .project-post-image-cue{background:#d8ebd5;color:#102624;transform:translateX(5px)}
+.project-post-content{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(25px,4vw,52px)}
+.project-post-meta,.project-post-category{font:11px 'Silkscreen',monospace;letter-spacing:.07em;color:#b9cdbb}
+.project-post-meta span{padding:0 8px;color:#7b9b91}
+.project-post-content h2{font-size:clamp(26px,3vw,40px);margin:24px 0 12px;line-height:1.16}
+.project-post-content p{font-size:16px;line-height:1.7;margin:0 0 24px;max-width:48ch;color:#d4e1d9}
+.project-post-category{margin-top:auto}
+.project-post-open{display:flex;justify-content:space-between;align-items:center;width:100%;padding-top:20px;margin-top:26px;border-top:1px solid #5b786e;font:12px 'Silkscreen',monospace;letter-spacing:.06em;color:#e8e3bd}
+.project-post-open b{font:26px sans-serif;font-weight:400;transition:transform .3s}
+.project-post:hover .project-post-open b,.project-post:focus-visible .project-post-open b{transform:translate(5px,-5px)}
+@media(max-width:750px){.project-post{grid-template-columns:1fr}.project-post-image{min-height:240px}.project-post-content{padding:26px}.project-post-content h2{margin-top:17px}.project-post-open{margin-top:22px}}
+@media(prefers-reduced-motion:reduce){.project-post,.project-post img,.project-post-image-cue,.project-post-open b{transition:none}.project-post:hover,.project-post:focus-visible,.project-post:hover img,.project-post:focus-visible img{transform:none}}
+
 .inspiration-pair img{object-fit:contain;background:#050b0d}
 
 /* Working Log: one upright black cassette per slot, inside an open wooden rack. */
