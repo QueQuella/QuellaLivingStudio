@@ -4,7 +4,7 @@
 <meta name="theme-color" content="#080f10"><meta name="description" content="Explore Quella's Living Studio: a pixel world of visual journeys and working notes.">
 <title>Quella's Living Studio</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23182030'/%3E%3Cpath d='M6 7h20v4h-4v4h4v10H6V15h4v-4H6z' fill='%23f3d779'/%3E%3Crect x='12' y='15' width='3' height='3' fill='%23182030'/%3E%3Crect x='18' y='15' width='3' height='3' fill='%23182030'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./journey.css"><link rel="stylesheet" href="./expansion.css"></head><body class="night">
+<link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./journey.css"><link rel="stylesheet" href="./expansion.css"><link rel="stylesheet" href="./programming-dream.css"></head><body class="night">
 <header class="topbar">
  <a class="brand" href="#home" aria-label="Return to exploration map">✦ QUELLA.OS</a>
  <nav class="main-nav" aria-label="Main navigation"><a href="#visual">VISUAL JOURNEY</a><a href="#project">PROJECT</a><a href="#log">WORKING LOG</a><a href="#idea">IDEA PRESENTATION</a></nav>
@@ -173,7 +173,32 @@
  </div>
  </div>
  </section>
- <section id="projectLevels" class="view project-levels" hidden aria-labelledby="projectTitle"><header><p>PROJECT / LEVEL SELECT</p><h1 id="projectTitle">Programming Dream</h1><p>A small AI art experiment in a digital living system.</p></header><div class="level-grid"><article class="level-card"><img src="./assets/week05/programming-dream.png" alt="Dream-core sea and floating computer interface"><div><span>LEVEL 01 / CONCEPT</span><h2>The floating computer</h2><p>A computer drifts with the waves. Clicking it opens a drawing interface, where a model's prediction gives a creature its place in the dream.</p><a href="#idea">OPEN PROPOSAL / 6 SLIDES</a></div></article><article class="level-card planned"><span>LEVEL 02 / IN DEVELOPMENT</span><h2>The living system</h2><p>Draw a pattern. See the prediction. Meet the creature. Explore through its body.</p><p>The model and Unreal Engine connection are part of the production plan.</p></article></div></section>
+ <section id="projectLevels" class="view project-levels" hidden aria-labelledby="projectTitle"><header><p>PROJECT / LEVEL SELECT</p><h1 id="projectTitle">Programming Dream</h1><p>A small AI art experiment in a digital living system.</p></header><div class="level-grid"><article class="level-card"><img src="./assets/week05/programming-dream.png" alt="Dream-core sea and floating computer interface"><div><span>LEVEL 01 / PROGRAMMING DREAM</span><h2>The floating computer</h2><p>Cross a digital sea. Approach a floating computer. Scroll through its screen into the world of Programming Dream.</p><a href="#programming-dream">ENTER THE DIGITAL WORLD ↗</a></div></article><article class="level-card planned"><span>LEVEL 02 / IN DEVELOPMENT</span><h2>The living system</h2><p>Draw a pattern. See the prediction. Meet the creature. Explore through its body.</p><p>The model and Unreal Engine connection are part of the production plan.</p></article></div></section>
+ <section id="programmingDream" class="view pd-view" hidden aria-labelledby="pdTitle" tabindex="0">
+  <div class="pd-stage" aria-hidden="true">
+   <img class="pd-reference" src="./assets/programming-dream/scene-reference.webp" alt="">
+   <div id="pdCanvas" class="pd-canvas"></div><div class="pd-vignette"></div><div id="pdPortal" class="pd-portal"></div>
+  </div>
+  <div class="pd-hud"><a href="#project" class="pd-return">← PROJECTS</a><span id="pdChapter">01 / DIGITAL SEA</span><button id="pdSkip" type="button">SKIP TO ABOUT ↓</button></div>
+  <div id="pdStory" class="pd-story">
+   <header id="pdIntro" class="pd-intro"><p class="pd-kicker">QUELLA / INTERACTIVE ART / 2026</p><h1 id="pdTitle" tabindex="-1">A dream,<br><em>waiting for life.</em></h1><p class="pd-invitation">Somewhere in this sea, a computer is dreaming.</p><button id="pdBegin" class="pd-scroll-cue" type="button">SCROLL TO ENTER <span>↓</span></button></header>
+   <p id="pdStatus" class="pd-status" role="status">Preparing the digital world…</p>
+  </div>
+  <div class="pd-content">
+   <section id="pdAbout" class="pd-about" aria-labelledby="pdAboutTitle">
+    <div class="pd-section-label"><span>02 / ABOUT THE PROJECT</span><i></i><span>IN DEVELOPMENT</span></div>
+    <h2 id="pdAboutTitle" tabindex="-1">PROGRAMMING<br><em>DREAM</em><span class="pd-title-star" aria-hidden="true">✦</span></h2>
+    <div class="pd-about-copy"><p class="pd-subtitle">Between human imagination<br>and machine interpretation.</p><div><p class="pd-pitch"><em>Programming Dream</em> is a small interactive art experiment set in a dreamlike digital ocean. A floating computer invites players to draw abstract patterns, which a trained neural network interprets as one of six low-poly creatures. These handmade creatures emerge into the sea, turning each drawing into an encounter between what a person imagines and what a machine recognises. Through rough textures, uncertain forms, and moments of surprise, I explore how digital life can leave room for our own imagination.</p><nav class="pd-links" aria-label="Explore the project further"><a href="#log"><span>01 / PROCESS</span>Working Log <b aria-hidden="true">↗</b></a><a href="#idea"><span>02 / CONCEPT</span>Idea Presentation <b aria-hidden="true">↗</b></a></nav></div></div>
+    <div class="pd-bottom-line"><span>BLENDER · UNREAL ENGINE · PYTORCH</span><button id="pdToShowcase" type="button">CONTINUE TO SHOWCASE ↓</button></div>
+   </section>
+   <section id="pdShowcase" class="pd-showcase" aria-labelledby="pdShowcaseTitle">
+    <div class="pd-section-label"><span>03 / SHOWCASE</span><i></i><span>WORK IN PROGRESS</span></div>
+    <header><h2 id="pdShowcaseTitle" tabindex="-1">A glimpse<br><em>inside the dream.</em></h2><p>Gameplay film / coming soon</p></header>
+    <div class="pd-video-slot" aria-label="Gameplay video placeholder. Video not yet available."><div class="pd-video-corners" aria-hidden="true"></div><span class="pd-video-icon" aria-hidden="true">▷</span><p>THE DREAM IS STILL TAKING SHAPE.</p><span>GAMEPLAY VIDEO / COMING SOON</span></div>
+    <footer><p>Human input → machine interpretation → digital life.</p><button id="pdReplay" type="button">↑ RETURN TO THE SEA</button></footer>
+   </section>
+  </div>
+ </section>
  <section id="empty" class="view empty-view" hidden><p id="emptyKicker">UNFILLED SPACE</p><h1 id="emptyTitle" tabindex="-1"></h1><div class="empty-content" aria-label="Content intentionally left empty"></div><a href="#home" class="back-link">← RETURN TO MAP</a><a href="#idea" id="projectNext" class="section-next" hidden>EXPLORE IDEA PRESENTATION ↗</a></section>
  <section id="feedback" class="view feedback-view" hidden aria-labelledby="feedbackTitle">
   <canvas id="feedbackStars" aria-hidden="true"></canvas>
@@ -229,4 +254,5 @@
 <script src="./vendor/mermaid.min.js"></script><script src="./engine.js"></script><script src="./notes.js"></script><script src="./entries.js"></script><script src="./week05-entry.js"></script><script src="./expansion.js"></script><script src="./journey.js"></script><script src="./script.js"></script>
 <script>if(location.protocol==='file:'){const notice=document.querySelector('#vhsScene .vhs-scene-status');if(notice)notice.textContent='To load the 3D archive, use OPEN-WEBSITE.command (Mac) or OPEN-WEBSITE.bat (Windows) in the ZIP folder.';}</script>
 <script type="module" src="./vhs-scene.js"></script>
+<script type="module" src="./programming-dream.js"></script>
 </body></html>
