@@ -167,11 +167,12 @@
  function markNav(id){document.querySelectorAll('.topbar a').forEach(a=>{if(a.hash==='#'+id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});}
 
 function navigate(id,push=true){
+   window.ProgrammingDream?.setActive(id==='programming-dream');
    window.VHSArchive?.setActive(id==='log');
    if(route==='visual'&&id!=='visual')window.VisualJourney.leave();
    if(route==='detail'&&id!=='detail')$('detailSections').replaceChildren();
    busy=false;keys.clear();E.cancel(player);hovered=null;cardPointer=null;railPointer=null;
-   route=id;markNav(id==='detail'?mode:id);
+   route=id;markNav(id==='programming-dream'?'project':id==='detail'?mode:id);
    if(push)history.pushState({archiveMode:id==='visual'||id==='log'?id:mode,slot:id==='visual'||id==='log'?indices[id]:index},'','#'+id);
    if(id==='home'){setView('home');fit();$('mapStatus').textContent='CHOOSE A DESTINATION';return;}
    if(id==='visual'){mode=id;index=0;setView('visualMap');window.VisualJourney.enter();$('journeyTitle').focus({preventScroll:true});return;}
@@ -179,6 +180,7 @@ function navigate(id,push=true){
    if(id==='detail'){setView('detail');buildDetail();$('detailTitle').focus({preventScroll:true});return;}
    if(id==='idea'){setView('ideaSettings');window.IdeaDeck?.enter();return;}
    if(id==='project'){setView('projectLevels');return;}
+   if(id==='programming-dream'){setView('programmingDream');window.ProgrammingDream?.enter();$('pdTitle').focus({preventScroll:true});return;}
    if(id==='about'){setView('about');fitAbout();$('aboutTitle').focus({preventScroll:true});return;}
    if(id==='feedback'){setView('feedback');loadFeedback();$('feedbackTitle').focus({preventScroll:true});return;}
    if(id.startsWith('secret')){setView('secret');$('surpriseRoom').hidden=id!=='secret-west';$('gameRoom').hidden=id!=='secret-east';if(id==='secret-east'){const frame=$('pixelWorldFrame');if(!frame.src)frame.src=frame.dataset.src;else frame.contentWindow?.postMessage('quella:resize','*');}return;}
@@ -216,7 +218,7 @@ function navigate(id,push=true){
    if(e.target.closest('.topbar'))navigate(id);else if(id==='home')navigate('home');else openRoute(id);
  });
  addEventListener('popstate',e=>{const id=location.hash.slice(1);if(e.state?.archiveMode){mode=e.state.archiveMode;index=clamp(e.state.slot||0,0,count()-1);indices[mode]=index;}navigate(validRoute(id)?id:'home',false);});
- const validRoute=id=>['home','visual','log','detail','idea','project','feedback','about','secret-west','secret-east'].includes(id);
+ const validRoute=id=>['home','visual','log','detail','idea','project','programming-dream','feedback','about','secret-west','secret-east'].includes(id);
  function metadata(i){
    $('slotNumber').textContent=(mode==='log'?'DATED FRAGMENT':'CARTRIDGE')+' / '+number(i)+' — '+count();
    $('slotSummary').textContent=mode==='log'?notes[i].title:(i===0?'Retro Time Machine':'Untitled cartridge '+number(i));
