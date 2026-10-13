@@ -1,12 +1,17 @@
 import * as THREE from './vendor/three.module.js';
 import config from './dream-config.js';
 import {clamp, timeline, smoothRange} from './dream-timeline.mjs';
+import {scrollCoordinate, sectionMotion} from './dream-sections.mjs';
 
 const view = document.getElementById('programmingDream');
 const host = document.getElementById('pdCanvas');
 const story = document.getElementById('pdStory');
 const about = document.getElementById('pdAbout');
 const showcase = document.getElementById('pdShowcase');
+const question = document.getElementById('pdQuestion');
+const filmTransition = document.getElementById('pdFilmTransition');
+const further = document.getElementById('pdFurther');
+const reveals = [...view.querySelectorAll('[data-pd-reveal]')];
 const portal = document.getElementById('pdPortal');
 const intro = document.getElementById('pdIntro');
 const chapter = document.getElementById('pdChapter');
@@ -20,14 +25,24 @@ const startPosition = new THREE.Vector3(...config.startPosition);
 const startTarget = new THREE.Vector3(...config.startTarget);
 const nearPosition = new THREE.Vector3(), endPosition = new THREE.Vector3(), target = new THREE.Vector3();
 const pointer = new THREE.Vector2(), drift = new THREE.Vector2();
+let routeTransition = false;
+let questionLayout, filmLayout;
+
+function sectionTop(section) {
+  return scrollCoordinate(section.getBoundingClientRect().top, view.getBoundingClientRect().top, view.scrollTop);
+}
+function measureSections() {
+  if (view.hidden) return;
+  questionLayout = {top: sectionTop(question), height: question.offsetHeight};
+  filmLayout = {top: sectionTop(filmTransition), height: filmTransition.offsetHeight};
+}
 
 function scrollToSection(section, focus = true) {
-  // offsetTop avoids window scrolling: this site uses one internal scroll surface.
-  view.scrollTo({top: section.offsetTop, behavior: reduced.matches ? 'instant' : 'smooth'});
+  view.scrollTo({top: sectionTop(section), behavior: reduced.matches ? 'instant' : 'smooth'});
   if (focus) section.querySelector('h2')?.focus({preventScroll: true});
 }
 document.getElementById('pdSkip').addEventListener('click', () => scrollToSection(about));
-document.getElementById('pdToShowcase').addEventListener('click', () => scrollToSection(showcase));
+document.getElementById('pdToShowcase').addEventListener('click', () => scrollToSection(filmTransition));
 document.getElementById('pdBegin').addEventListener('click', () => {
   view.scrollTo({top: Math.min(view.clientHeight * .75, story.offsetHeight - view.clientHeight), behavior: reduced.matches ? 'instant' : 'smooth'});
 });
@@ -36,19 +51,77 @@ document.getElementById('pdReplay').addEventListener('click', () => {
   document.getElementById('pdTitle').focus({preventScroll: true});
 });
 function readScroll() {
+  if (view.hidden) return;
   goal = clamp(view.scrollTop / Math.max(1, story.offsetHeight - view.clientHeight));
   if (reduced.matches) progress = goal;
   updateText();
+  updateSectionMotion();
   schedule();
 }
 function updateText() {
   const state = timeline(goal);
   intro.style.opacity = state.intro;
   intro.style.visibility = state.intro < .01 ? 'hidden' : 'visible';
-  const label = view.scrollTop >= showcase.offsetTop - view.clientHeight * .4 ? '03 / SHOWCASE' : goal >= .99 ? '02 / ABOUT THE PROJECT' : state.chapter;
+  const scroll = view.scrollTop + view.clientHeight * .45;
+  const label = scroll >= sectionTop(further) ? '06 / BEHIND THE DREAM' : scroll >= sectionTop(showcase) ? '05 / SHOWCASE' : scroll >= sectionTop(filmTransition) ? '04 / THE DREAM IN MOTION' : scroll >= sectionTop(about) ? '03 / ABOUT THE PROJECT' : goal >= .99 ? '02 / A QUESTION' : state.chapter;
   if (chapter.textContent !== label) chapter.textContent = label;
   document.getElementById('pdSkip').style.visibility = goal < .98 ? 'visible' : 'hidden';
 }
+function updateSectionMotion() {
+  if (!questionLayout || !filmLayout) measureSections();
+  const h = view.clientHeight;
+  for (const [section, layout, prefix] of [[question, questionLayout, 'q'], [filmTransition, filmLayout, 'film']]) {
+    if (!layout) continue;
+    const state = sectionMotion(view.scrollTop, layout.top, layout.height, h);
+    section.style.setProperty(`--pd-${prefix}-opacity`, reduced.matches ? 1 : state.title);
+    section.style.setProperty(`--pd-${prefix}-shift`, reduced.matches ? '0px' : `${(1 - state.enter) * 32 - state.exit * 28}px`);
+    section.style.setProperty(`--pd-${prefix}-scale`, reduced.matches ? 1 : 1 + state.travel * .065);
+    if (prefix === 'film') {
+      section.style.setProperty('--pd-film-frame-scale', reduced.matches ? 1 : .55 + state.travel * .9);
+      section.style.setProperty('--pd-film-light', reduced.matches ? 0 : Math.sin(state.exit * Math.PI) * .35);
+    }
+  }
+  for (const element of reveals) {
+    const y = element.getBoundingClientRect().top - view.getBoundingClientRect().top;
+    // Stay visible after entrance so tall About copy never disappears mid-reading.
+    const visible = reduced.matches || element.contains(document.activeElement) ? 1 : smoothRange((h - y) / h, .05, .38);
+    element.style.setProperty('--pd-reveal', visible);
+    element.style.setProperty('--pd-reveal-y', `${(1 - visible) * 28}px`);
+  }
+}
+
+// Capture before the existing hash router; route exactly once under the cover.
+view.addEventListener('click', async event => {
+  const link = event.target.closest('a[data-pd-route]');
+  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  if (link.dataset.pdPass === 'true' || reduced.matches) return;
+  event.preventDefault(); event.stopPropagation();
+  if (routeTransition) return;
+  routeTransition = true;
+  const overlay = document.createElement('div');
+  overlay.className = `pd-route-transition pd-route-${link.dataset.pdRoute}`;
+  overlay.setAttribute('aria-hidden', 'true');
+  if (link.dataset.pdRoute === 'tape') {
+    for (let i = 0; i < 10; i++) {
+      const strip = document.createElement('i'); strip.style.setProperty('--strip', i); overlay.append(strip);
+    }
+  }
+  document.body.append(overlay);
+  try {
+    const cover = overlay.animate([{opacity: 0}, {opacity: 1}], {duration: link.dataset.pdRoute === 'tape' ? 360 : 300, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards'});
+    await cover.finished;
+    link.dataset.pdPass = 'true';
+    link.click();
+    delete link.dataset.pdPass;
+    // The destination paints behind a fully opaque cover before the reveal.
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const uncover = overlay.animate([{opacity: 1}, {opacity: 0}], {duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards'});
+    await uncover.finished;
+  } catch (error) {
+    // Navigation still works if the animation API is unavailable or interrupted.
+    if (location.hash !== link.hash) { link.dataset.pdPass = 'true'; link.click(); delete link.dataset.pdPass; }
+  } finally { overlay.remove(); routeTransition = false; }
+}, {capture: true});
 view.addEventListener('scroll', readScroll, {passive: true});
 view.addEventListener('pointermove', event => {
   if (event.pointerType !== 'mouse' || reduced.matches) return;
@@ -58,13 +131,15 @@ view.addEventListener('pointermove', event => {
 view.addEventListener('pointerleave', () => pointer.set(0, 0));
 
 window.ProgrammingDream = {
-  enter() { active = true; initialise(); resize(); readScroll(); schedule(); },
+  enter() { active = true; initialise(); resize(); measureSections(); readScroll(); schedule(); },
   setActive(value) { active = value; if (value) this.enter(); else if (frameId) { cancelAnimationFrame(frameId); frameId = 0; lastTime = 0; } },
 };
 // Script modules load after the site's initial route; handle direct hash entry too.
 if (active) window.ProgrammingDream.enter();
 new MutationObserver(() => window.ProgrammingDream.setActive(!view.hidden)).observe(view, {attributes: true, attributeFilter: ['hidden']});
-new ResizeObserver(() => { resize(); readScroll(); }).observe(view);
+new ResizeObserver(() => { resize(); measureSections(); readScroll(); }).observe(view);
+new ResizeObserver(() => { measureSections(); readScroll(); }).observe(document.querySelector('.pd-content'));
+document.fonts.ready.then(() => { measureSections(); readScroll(); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden && frameId) { cancelAnimationFrame(frameId); frameId = 0; lastTime = 0; }
   else schedule();
@@ -148,7 +223,7 @@ async function initialise() {
     computer.add(face);
     nearPosition.copy(screenCenter).add(new THREE.Vector3(0, .1, 4.5));
     endPosition.copy(screenCenter).addScaledVector(direction, .065);
-    status.textContent = config.environment ? 'Scroll forward to enter · scroll back to return' : 'Scroll to explore · full scene reconstruction in progress';
+    status.textContent = 'Scroll forward to enter · scroll back to return';
     if (config.environment) {
       try {
         const environment = (await loadWithTimeout(config.environment)).scene;

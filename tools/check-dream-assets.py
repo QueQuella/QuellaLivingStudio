@@ -27,11 +27,11 @@ document = Document()
 document.feed((root / "index.html").read_text())
 for resource in document.resources:
     assert (root / resource).is_file(), resource
-for required in ["pdTitle", "pdAbout", "pdShowcase", "programmingDream", "pdCanvas"]:
+for required in ["pdTitle", "pdQuestion", "pdAbout", "pdFilmTransition", "pdShowcase", "pdFurther", "programmingDream", "pdCanvas"]:
     assert required in document.ids
 for required in ["#programming-dream", "#log", "#idea"]:
     assert required in document.links
-for file in ["programming-dream.js", "dream-config.js", "vendor/gltf/GLTFLoader.js", "vendor/gltf/BufferGeometryUtils.js"]:
+for file in ["programming-dream.js", "dream-config.js", "dream-sections.mjs", "vendor/gltf/GLTFLoader.js", "vendor/gltf/BufferGeometryUtils.js"]:
     source = (root / file).read_text()
     for imported in re.findall(r"(?:^import[\s\S]*?\bfrom\s*|import\()['\"]([^'\"]+)", source, re.MULTILINE):
         assert imported.startswith("."), f"Nonlocal module: {file} → {imported}"

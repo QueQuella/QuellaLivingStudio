@@ -2,10 +2,12 @@
 
 Entry: Project → **Enter the Digital World**, or `index.html#programming-dream`.
 
-Scroll down: digital sea → floating computer → screen portal → About → Showcase.
+Scroll down: digital sea → floating computer → screen portal → Question → About
+→ film transition title → Showcase → further reading buttons.
 Scroll up reverses the camera and portal along the same timeline. Native wheel,
-trackpad, touch, Page Down and arrow-key scrolling remain available. The About
-buttons route to the existing `#log` and `#idea` pages. The gameplay slot is empty
+trackpad, touch, Page Down and arrow-key scrolling remain available. The further
+reading buttons at the very end route to the existing `#log` and `#idea` pages,
+using a tape shutter and a soft white-light transition respectively. The gameplay slot is empty
 and has no pretend play control. Nothing changes the real game or its inference.
 
 ## Asset status
@@ -15,12 +17,13 @@ and has no pretend play control. Nothing changes the real game or its inference.
   Web copy: 516,112 bytes (source: 29,537,400 bytes).
 - `scene-reference.webp`: web copy of the supplied `rendered.png`; used when 3D
   is unavailable. The original uploads are not changed.
-- `programmingdream01scene.blend`: **upload failed; not read or used**. The sea,
-  columns, rocks and planets currently form a temporary spatial reconstruction,
-  not a conversion of that Blender scene. Full scene fidelity is pending.
+- The sea, columns, rocks and planets form an illustrative spatial environment
+  based on the supplied reference. The user accepted this visual direction;
+  a more detailed Blender scene reconstruction is not part of the current scope.
+  The earlier `.blend` upload failed and was not read or used.
 - Gameplay video: pending; intentionally empty.
 
-## Connect the complete Blender scene
+## Optional future scene replacement
 
 1. Re-upload the `.blend` and pack external textures (`File → External Data →
    Pack Resources`), or export a self-contained GLB with materials/textures.
@@ -48,8 +51,15 @@ after entering the text sections. Reduced motion disables ambient waves/bobbing,
 pointer drift and smoothing. WebGL/model failures preserve the supplied render
 and allow access to all text and links. Use an HTTP server rather than `file://`.
 
-Run `node --test tools/dream-*.test.mjs` and
+The Question and film interlude use sticky title scenes whose opacity/scale/light
+follow scroll progress in both directions. About and Showcase text reveal gently
+on entering the viewport. About's title is capped at 68px (48px on mobile).
+Nested section jumps are calculated against the actual scroll container, so the
+HUD's Skip to About and the About-to-film button reach the correct section.
+Animations route under a fully opaque cover, then uncover the painted destination;
+modified link clicks retain native behaviour and reduced motion bypasses the cover.
+
+Run `node --test tools/dream-*.test.mjs` (9 tests) and
 `python tools/check-dream-assets.py` from the repository root. Browser visual QA
-was unavailable in the task environment; inspect desktop and mobile rendering
-before merging, especially the final portal composition. The new branch does
-not deploy or alter the main website.
+was unavailable in the task environment. The revision is published through
+the repository's existing GitHub Pages build after updating main.
