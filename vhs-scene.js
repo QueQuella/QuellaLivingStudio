@@ -55,13 +55,13 @@ function init(){
   const card=document.createElement('canvas');card.width=256;card.height=1024;const ink=card.getContext('2d');
   const spineMap=new THREE.CanvasTexture(card);spineMap.colorSpace=THREE.SRGBColorSpace;spineMap.anisotropy=renderer.capabilities.getMaxAnisotropy();spine.material.map=spineMap;
   function printSpine(image){
-   ink.fillStyle=['#d8ae81','#a7c7c3','#b9b2d2','#c6ba80'][i%4];ink.fillRect(0,0,256,1024);
+   ink.fillStyle=i>=4?'#abc6c2':['#d8ae81','#a7c7c3','#b9b2d2','#c6ba80'][i%4];ink.fillRect(0,0,256,1024);
    if(image){const crop=Math.min(image.width/232,image.height/430),sw=232*crop,sh=430*crop;ink.drawImage(image,(image.width-sw)/2,(image.height-sh)/2,sw,sh,12,18,232,430);}
    else {ink.fillStyle='#243b40';ink.fillRect(12,18,232,430);ink.fillStyle='#e5d9b1';ink.font='bold 88px monospace';ink.textAlign='center';ink.fillText(String(i+1).padStart(2,'0'),128,235);ink.font='22px monospace';ink.fillText('UNRECORDED',128,296);}
    ink.save();ink.translate(140,716);ink.rotate(-Math.PI/2);ink.fillStyle='#182326';ink.textAlign='center';ink.font='bold 34px Georgia';ink.fillText(note.shortTitle||note.title,0,0,465);ink.restore();
    ink.fillStyle='#1b292d';ink.fillRect(12,958,232,50);ink.fillStyle='#fff0ce';ink.font='22px monospace';ink.textAlign='center';ink.fillText('VHS / '+String(i+1).padStart(2,'0'),128,991);spineMap.needsUpdate=true;
   }
-  printSpine();const source=window.LogCovers?.[i];if(source)loader.load(source,texture=>{texture.colorSpace=THREE.SRGBColorSpace;cover.material.map=texture;cover.material.needsUpdate=true;printSpine(texture.image);});
+  printSpine();const source=window.getLogCover?.(i)||window.LogCovers?.[i];if(source)loader.load(source,texture=>{texture.colorSpace=THREE.SRGBColorSpace;cover.material.map=texture;cover.material.needsUpdate=true;printSpine(texture.image);});
   tapes.push({group:tape,base:tape.position.clone(),index:i});
  });
  const floor=box(scene,0,-1.46,0,35,.08,24,mat(0x182b2c,.25,.75));floor.receiveShadow=true;floor.material.transparent=true;floor.material.opacity=.66;

@@ -3,12 +3,14 @@ window.StudioNotes = [
   {id:'note-02', title:'AI Art Reading Response', shortTitle:'AI Art / Reading', date:'2026.09.19', type:'Reading Response'},
   {id:'note-03', title:'reading_Internet Art', shortTitle:'Internet Art / Reading', date:'2026.09.21', type:'Reading Response'},
   {id:'note-04', title:'Unstable Aesthetics: Game', shortTitle:'Unstable Aesthetics', date:'2026.10.02', type:'Reading Response'},
-  ...Array.from({length:14},(_,i)=>({
-    id:'note-'+String(i+5).padStart(2,'0'),
-    title:'Untitled Entry '+String(i+5).padStart(2,'0'),
-    shortTitle:'Empty / '+String(i+5).padStart(2,'0'),
+  {id:'note-05', title:'W6_draw in UE', shortTitle:'Dream / W6 Drawing', date:'2026.10.13', type:'Programming Dream / Development Log', summary:'Drawing UI · Computer interaction · Close & reset', project:'programming-dream'},
+  ...Array.from({length:13},(_,i)=>({
+    id:'note-'+String(i+6).padStart(2,'0'),
+    title:'Programming Dream / Log '+String(i+6).padStart(2,'0'),
+    shortTitle:'Dream / Log '+String(i+6).padStart(2,'0'),
     date:'—.—.—',
-    type:'Empty Log Slot',
+    type:'Programming Dream / Upcoming Log',
+    project:'programming-dream',
     empty:true
   }))
 ];

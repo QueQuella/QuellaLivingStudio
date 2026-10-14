@@ -1,6 +1,10 @@
 (() => {
  const root='./assets/week05/';
- window.LogCovers=[root+'programming-dream.png',root+'ai-art.jpg',root+'internet-art.jpeg',root+'algorithm-map.png'];
+ window.ProjectLogCover='./assets/working-log/w6-computer.webp';
+ const readingCovers=[root+'programming-dream.png',root+'ai-art.jpg',root+'internet-art.jpeg',root+'algorithm-map.png'];
+ // Every project log from tape 05 onward shares one cover, including future slots.
+ window.getLogCover=i=>i>=4?window.ProjectLogCover:readingCovers[i];
+ window.LogCovers=window.StudioNotes.map((_,i)=>window.getLogCover(i));
  const presentation=document.getElementById('ideaSettings');
  const index=presentation.querySelector('.dream-index');
  const links=[...index.querySelectorAll('[data-dream-slide]')];

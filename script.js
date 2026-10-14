@@ -222,7 +222,7 @@ function navigate(id,push=true){
  function metadata(i){
    $('slotNumber').textContent=(mode==='log'?'DATED FRAGMENT':'CARTRIDGE')+' / '+number(i)+' — '+count();
    $('slotSummary').textContent=mode==='log'?notes[i].title:(i===0?'Retro Time Machine':'Untitled cartridge '+number(i));
-   $('slotInfo').textContent=mode==='log'?notes[i].date+' · '+notes[i].type:(i===0?'P5.JS · INTERACTIVE GENERATIVE ART':'WORK / CONCEPT / INTRO · CONTENT EMPTY');
+   $('slotInfo').textContent=mode==='log'?notes[i].date+' · '+notes[i].type+(notes[i].summary?' · '+notes[i].summary:''):(i===0?'P5.JS · INTERACTIVE GENERATIVE ART':'WORK / CONCEPT / INTRO · CONTENT EMPTY');
  }
  function buildArchive(){
    const isLog=mode==='log';$('archive').classList.toggle('is-log',isLog);
@@ -235,15 +235,15 @@ function navigate(id,push=true){
    $('cardTrack').replaceChildren();$('timelineTicks').replaceChildren();$('cardTrack').className='card-track';$('cardTrack').style.translate='';
    const slots=Array.from({length:count()},(_,i)=>({i,c:0}));
    for(const {i,c} of slots){
-     const b=document.createElement('button');b.className='archive-card'+(isLog?' note':'');b.dataset.index=i;b.style.setProperty('--card',colors[i%colors.length]);b.style.setProperty('--side','#334c42');
+     const b=document.createElement('button');b.className='archive-card'+(isLog?' note':'');b.dataset.index=i;b.style.setProperty('--card',isLog&&i>=4?'#abc6c2':colors[i%colors.length]);b.style.setProperty('--side','#334c42');
      b.dataset.cycle=c;
      b.setAttribute('aria-label',isLog?'Read '+notes[i].title:'Open cartridge '+number(i));
      const art=document.createElement('span');art.className='slot-art';
-     if(!isLog&&i===0){art.classList.add('live-art');const preview=document.createElement('canvas');preview.width=180;preview.height=220;preview.setAttribute('aria-hidden','true');art.append(preview);}else if(isLog){const img=document.createElement('img');img.src=window.LogCovers[i]||'./assets/visual-journey-background-v2.png';img.alt='';art.append(img);}else art.textContent=number(i);
+     if(!isLog&&i===0){art.classList.add('live-art');const preview=document.createElement('canvas');preview.width=180;preview.height=220;preview.setAttribute('aria-hidden','true');art.append(preview);}else if(isLog){const img=document.createElement('img');img.src=window.getLogCover?.(i)||window.LogCovers[i]||'./assets/visual-journey-background-v2.png';img.alt='';art.append(img);}else art.textContent=number(i);
      const small=document.createElement('small');small.textContent=isLog?notes[i].title:(i===0?'RETRO TIME MACHINE':'EMPTY FILE');art.append(small);
      const caption=document.createElement('span');caption.className='card-caption';caption.textContent=isLog?notes[i].date:'QUELLA / ARCHIVE';
      const meta=document.createElement('small');meta.textContent=isLog?notes[i].type.toUpperCase():(i===0?'P5.JS ARTWORK':'DEMO SLOT');caption.append(meta);b.append(art,caption);
-     if(isLog){const spine=document.createElement('span');spine.className='vhs-spine';spine.innerHTML='<i>QUELLA ● VHS</i><strong></strong><small></small>';spine.querySelector('strong').textContent=notes[i].shortTitle||notes[i].title;spine.querySelector('small').textContent=notes[i].date;b.append(spine);}
+     if(isLog){const spine=document.createElement('span');spine.className='vhs-spine'+(i>=4?' project-log-spine':'');if(i>=4)spine.style.setProperty('--project-log-cover','url('+window.getLogCover(i)+')');spine.innerHTML='<i>QUELLA ● VHS</i><strong></strong><small></small>';spine.querySelector('strong').textContent=notes[i].shortTitle||notes[i].title;spine.querySelector('small').textContent=notes[i].date;b.append(spine);}
      b.onmouseenter=()=>{hovered=i;metadata(i);};b.onmouseleave=()=>{hovered=null;metadata(index);};b.onfocus=()=>{hovered=i;metadata(i);};b.onblur=()=>{hovered=null;};
      b.onclick=()=>{if(!suppressCardClick)openCard(i);};$('cardTrack').append(b);
      if(isLog&&c===0){const tick=document.createElement('button');tick.textContent=notes[i].date.slice(5).replace('.','/');tick.setAttribute('aria-label','Read note dated '+notes[i].date);tick.onclick=()=>openCard(i);$('timelineTicks').append(tick);}
