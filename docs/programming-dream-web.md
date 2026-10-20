@@ -30,8 +30,8 @@ and has no pretend play control. Nothing changes the real game or its inference.
 2. Export scenery separately from the computer and ocean. Keep the named `screen`
    mesh on the computer. Check material appearance: procedural Blender shaders
    may require baking into maps for glTF.
-3. Save scenery to `assets/programming-dream/environment.glb`, and set
-   `environment` in `dream-config.js` to that relative URL. Set its scale/position
+3. Save scenery to `public/assets/programming-dream/environment.glb`, and set
+   `environment` in `src/runtime/dream-config.js` to that relative URL. Set its scale/position
    from the actual export. This disables the temporary scenery; if it fails to
    load, the temporary environment is used and the page reports that state.
 4. Adjust `startPosition`, `startTarget`, `computerPosition` and `computerHeight`
@@ -43,7 +43,7 @@ and has no pretend play control. Nothing changes the real game or its inference.
 ## Implementation and checks
 
 Three.js r170 and its matching GLTFLoader/BufferGeometryUtils are vendored locally
-(MIT, see `vendor/gltf/LICENSE`). No CDN, bundler or GSAP dependency is required.
+(MIT, see `public/vendor/gltf/LICENSE`). The React/Vite app loads these locally; no CDN or GSAP dependency is required.
 Native scroll plus one smoothed progress value drives all camera/portal stages.
 Modules use relative paths for both GitHub project Pages and root hosting.
 Loading is lazy on route entry; rendering pauses on route exit, hidden tabs and
@@ -60,6 +60,5 @@ Animations route under a fully opaque cover, then uncover the painted destinatio
 modified link clicks retain native behaviour and reduced motion bypasses the cover.
 
 Run `node --test tools/dream-*.test.mjs` (9 tests) and
-`python tools/check-dream-assets.py` from the repository root. Browser visual QA
-was unavailable in the task environment. The revision is published through
-the repository's existing GitHub Pages build after updating main.
+`python tools/check-dream-assets.py` from the repository root. Use `npm run dev` for local browser checks and `npm run build` for production.
+Publishing now uses the Vite `dist/` artifact; see the root README.

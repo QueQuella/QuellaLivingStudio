@@ -1,6 +1,6 @@
 window.StudioEntries = {
-log: [
-`<article class="real-entry website-entry">
+  log: [
+    `<article class="real-entry website-entry">
  <p class="entry-lead">On September 18, 2026, I began building this Personal Living Studio for <em>Generative AI Workflow for Media Art</em>. It is a space where artworks, process notes, and exploratory browsing allow my learning to grow into a place that visitors can enter.</p>
  <section><h2>01 / VISUAL ART</h2><p>The website uses deep green and near-black tones, pixel graphics, CRT scanlines, and the texture of a VHS display. Home is also the primary page: an explorable map. The small course title stays in the background so that the buildings, character, and environmental details remain central.</p><p>Visual Journey presents works as cartridges. Working Log uses dated cards placed along a time rail. About combines a twinkling star field, an avatar, retro borders, and hyperlinks to create a small personal universe.</p></section>
  <section><h2>02 / MOTION DESIGN</h2><p>When a visitor selects a building on the map, the character walks to its entrance before the page opens. Flags at the far edges encourage free exploration and lead to secret pages.</p><p>The cartridges and journal cards move in continuous loops controlled by a trackpad or drag gesture. Flowing lines connect the cartridges, while the keeper follows the Working Log timeline and leaves small pixel fireworks behind. Page transitions are intentionally direct at this stage.</p></section>
@@ -8,7 +8,7 @@ log: [
  <section><h2>04 / BROWSING FLOW</h2><div class="browse-flow" role="img" aria-label="Home is the primary exploration map. After the character reaches a selected building, visitors can enter Visual Journey, Project, or About. Edge flags lead to secret pages. Visual Journey connects to artwork details and Working Log; artwork details connect to About; Project connects to Idea Presentation; this journal links to Feedback."><div class="flow-start">HOME = PRIMARY<br><small>EXPLORATION MAP · TOP NAVIGATION</small></div><p class="flow-arrow">↓ SELECT A BUILDING OR FLAG · WALK TO ITS ENTRANCE</p><div class="flow-branches"><div><a href="#visual">Visual Journey</a><span>↓</span><b>Artwork Detail → About</b><span>↘</span><a href="#log">Working Log</a></div><div><a href="#project">Project</a><span>↓</span><a href="#idea">Idea Presentation</a></div><div><a href="#about">About</a><span>Personal Universe</span><b>Edge Flags → Secret Pages</b></div></div></div><p>The top bar always provides access to the main pages, with Project in the second position. Visual Journey connects the finished work to its process, and each artwork detail can lead visitors to the maker.</p></section>
  <footer class="entry-footer">This space begins growing today.<a href="#feedback">Leave a thought → Feedback</a></footer>
 </article>`,
-`<article class="reading-entry">
+    `<article class="reading-entry">
  <nav class="entry-index" aria-label="Reading response sections"><p>QUICK INDEX</p><button data-scroll-target="chapters-12"><span>01</span>Chapters 1 &amp; 2</button><button data-scroll-target="chapters-457"><span>02</span>Chapters 4, 5 &amp; 7</button></nav>
  <div class="reading-body">
   <p class="book-link"><a href="https://www.openhumanitiespress.org/books/titles/ai-art/" target="_blank" rel="noopener">Read <em>AI Art: Machine Visions and Warped Dreams</em> at Open Humanities Press ↗</a></p>
@@ -56,7 +56,7 @@ timeline
  </div>
  <a class="floating-feedback" href="#feedback">FEEDBACK ↗</a>
 </article>`,
-`<article class="reading-entry internet-art-entry">
+    `<article class="reading-entry internet-art-entry">
  <nav class="entry-index" aria-label="Internet Art reading response sections"><p>QUICK INDEX</p><button data-scroll-target="web-progress"><span>01</span>Web Build Progress</button><button data-scroll-target="internet-reading"><span>02</span>Reading Response</button><button data-scroll-target="semiotic-examples"><span>03</span>AI Response</button></nav>
  <div class="reading-body">
   <p class="book-link"><a href="https://www.scribd.com/document/47831705/Internet-Art-Rachel-Greene" target="_blank" rel="noopener">Read <em>Internet Art</em> by Rachel Greene ↗</a></p>
@@ -78,10 +78,10 @@ timeline
   </section>
  </div>
  <a class="floating-feedback" href="#feedback">FEEDBACK ↗</a>
-</article>`
-],
-visual:`<section class="detail-section artwork-section"><h2>01 / WORK · Retro Time Machine</h2><iframe class="artwork-frame" src="./art/index.html" title="Retro Time Machine — interactive p5.js artwork" loading="eager"></iframe><p class="art-instruction">Click the artwork, or focus it and press the Space bar, to switch between calm time and time warp.</p></section>
+</article>`,
+  ],
+  visual: `<section class="detail-section artwork-section"><h2>01 / WORK · Retro Time Machine</h2><iframe class="artwork-frame" src="./art/index.html" title="Retro Time Machine — interactive p5.js artwork" loading="eager"></iframe><p class="art-instruction">Click the artwork, or focus it and press the Space bar, to switch between calm time and time warp.</p></section>
 <section class="detail-section prose-section"><h2>02 / DESCRIPTION</h2><p><em>Retro Time Machine</em> is a generative p5.js artwork that I designed. Pixel blocks behave like memories drifting across an old monitor, moving between blue-grey, amber, and hot orange. Three interfering wave fields keep the image in motion, while occasional flashes of colour suggest memories that have briefly returned.</p><p>After a click or press of the Space bar, time gradually accelerates. Stars stretch into trails, the pattern gains contrast, and the year readout moves out of control. Scanlines and a travelling band of light contain this journey within a retro CRT screen.</p></section>
 <section class="detail-section prose-section"><h2>03 / TECHNOLOGY</h2><p>The artwork uses p5.js and a 650 × 480 canvas divided into an eight-pixel grid. <code>pixelDensity(1)</code> and <code>noSmooth()</code> preserve crisp pixel edges. Three sine and cosine waves are combined and mapped to a limited colour palette; rare orange flashes create moments of “memory recall.”</p><p>The <code>warp</code> value approaches its target through <code>lerp(warp, targetWarp, 0.05)</code>. It controls the passage of time, the contrast of the colour field, and the speed and trail length of sixty stars. Transparent horizontal lines and a travelling scan band create the CRT texture. The YEAR display is calculated from accumulated time and warp, so it represents fictional time within the artwork.</p><p><a href="./art/time-machine.js" target="_blank" rel="noopener">View the artwork code ↗</a></p></section>
-<section class="detail-section prose-section"><h2>04 / STUDY · VISUAL REFERENCES</h2><ul class="resource-links"><li><a href="https://tetunori.github.io/GenerativeArtWithMath-p5.js/index.html" target="_blank" rel="noopener">Generative Art with Math — p5.js ↗</a></li><li><a href="https://openprocessing.org/discover/#/generativeart" target="_blank" rel="noopener">OpenProcessing · Generative Art ↗</a></li><li><a href="https://www.newrafael.com/internet" target="_blank" rel="noopener">Rafael Rozendaal · Internet Art ↗</a></li></ul><h2>TOOLS</h2><ul class="resource-links"><li><a href="https://editor.p5js.org/" target="_blank" rel="noopener">p5.js Web Editor ↗</a></li><li><a href="https://jsrun.net/" target="_blank" rel="noopener">JSRUN ↗</a></li></ul></section>`
+<section class="detail-section prose-section"><h2>04 / STUDY · VISUAL REFERENCES</h2><ul class="resource-links"><li><a href="https://tetunori.github.io/GenerativeArtWithMath-p5.js/index.html" target="_blank" rel="noopener">Generative Art with Math — p5.js ↗</a></li><li><a href="https://openprocessing.org/discover/#/generativeart" target="_blank" rel="noopener">OpenProcessing · Generative Art ↗</a></li><li><a href="https://www.newrafael.com/internet" target="_blank" rel="noopener">Rafael Rozendaal · Internet Art ↗</a></li></ul><h2>TOOLS</h2><ul class="resource-links"><li><a href="https://editor.p5js.org/" target="_blank" rel="noopener">p5.js Web Editor ↗</a></li><li><a href="https://jsrun.net/" target="_blank" rel="noopener">JSRUN ↗</a></li></ul></section>`,
 };

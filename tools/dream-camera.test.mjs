@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import * as THREE from '../vendor/three.module.js';
-import config from '../dream-config.js';
-import {timeline} from '../dream-timeline.mjs';
+import * as THREE from '../public/vendor/three.module.js';
+import config from '../src/runtime/dream-config.js';
+import {timeline} from '../src/runtime/dream-timeline.mjs';
 
-const bytes = fs.readFileSync(new URL('../assets/programming-dream/computer.glb', import.meta.url));
+const bytes = fs.readFileSync(new URL('../public/assets/programming-dream/computer.glb', import.meta.url));
 const length = bytes.readUInt32LE(12);
 const gltf = JSON.parse(bytes.subarray(20, 20 + length));
 const bounds = [];

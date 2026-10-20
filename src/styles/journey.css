@@ -2,7 +2,7 @@
 .journey-view{background:#020516;color:#f6eefc;font:14px/1.55 'DM Mono',monospace;isolation:isolate}
 .journey-viewport{position:absolute;inset:0;overflow:auto;overscroll-behavior:contain;scrollbar-color:#6d6196 #05071c;scrollbar-width:thin;cursor:grab!important;touch-action:pan-x pan-y;outline-offset:-4px}
 .journey-viewport.is-dragging{cursor:grabbing!important;user-select:none}
-.journey-world{position:relative;width:2364px;height:2660px;background:#020516 url('./assets/visual-journey-background.png') 0 0/100% 100% no-repeat;overflow:hidden}
+.journey-world{position:relative;width:2364px;height:2660px;background:#020516 url('/assets/visual-journey-background.png') 0 0/100% 100% no-repeat;overflow:hidden}
 .journey-world::after{content:'';position:absolute;z-index:0;inset:1010px 0 0;pointer-events:none;background:linear-gradient(180deg,transparent,#01020b66 45%,#01020bad)}
 .journey-sparkles{position:absolute;z-index:1;inset:0;pointer-events:none;overflow:hidden}
 .journey-sparkles i{position:absolute;width:var(--star);height:var(--star);background:#fff;border-radius:50%;opacity:.15;box-shadow:0 0 5px #fff,0 0 12px #b891ff,0 0 20px #6eaaff;animation:journey-twinkle 3s ease-in-out infinite}
@@ -38,7 +38,7 @@
 .j-note::before,.j-note::after{content:'✦';position:absolute;color:#ffe6f1;background:#5c2e6b;border:3px solid #df8dbf;width:25px;height:25px;display:grid;place-items:center;font-size:10px}.j-note::before{left:-15px;top:-15px}.j-note::after{right:-15px;bottom:-15px}
 .j-note-tabs{position:absolute;left:17px;right:17px;top:-13px;display:flex;justify-content:space-around}.j-note-tabs i{width:42px;height:18px;background:#b788beaa;border:2px solid #edc7df}.j-note-tabs i:nth-child(2){background:#edd88d}.j-note-tabs i:nth-child(3){background:#82aac7}
 .j-note-label{font-size:9px;letter-spacing:.12em;color:#86627e;margin-bottom:13px}.j-note h2{font:16px Georgia,serif;font-style:italic;color:#5e3566;margin:15px 0 5px}.j-note a{display:block;color:#643c7c;margin:6px 0;overflow-wrap:anywhere}.j-note-small{margin-top:18px;padding-top:10px;border-top:2px dotted #c38da8;font:italic 13px/1.5 Georgia,serif;color:#86536d}
-.j-sprite{position:absolute;z-index:2;width:140px;height:140px;background-image:url('./assets/visual-journey-sprites.png');background-repeat:no-repeat;background-size:560px 280px;image-rendering:pixelated;filter:drop-shadow(0 7px 7px #01020c99)}
+.j-sprite{position:absolute;z-index:2;width:140px;height:140px;background-image:url('/assets/visual-journey-sprites.png');background-repeat:no-repeat;background-size:560px 280px;image-rendering:pixelated;filter:drop-shadow(0 7px 7px #01020c99)}
 .sprite-moon{left:478px;top:1490px;background-position:0 0;transform:rotate(-7deg) scale(.88)}
 .sprite-portal{left:517px;top:2058px;background-position:-140px -140px;transform:scale(.78)}
 .sprite-flowers{left:1880px;top:1810px;background-position:-420px 0;transform:rotate(7deg) scale(.72)}
@@ -82,7 +82,7 @@
 @media(max-width:700px){.journey-world{width:4728px;height:5320px}.journey-intro{left:1964px;width:800px}.work-one{left:2104px;width:780px}.j-reference-note{left:2745px}.j-work-divider{left:1450px;width:1828px}.work-two{left:1960px;width:960px}.j-cinema-note{left:1695px}.sprite-moon{left:1820px}.sign-one{left:1870px}}
 
 /* Continuous game-archive frame, rebuilt around the two Visual Journey works. */
-.journey-world{height:8500px;background-color:#020516;background-image:url('./assets/visual-journey-background-v2.png'),linear-gradient(180deg,#020516 0,#05051c 48%,#10072a 74%,#02040f 100%);background-position:0 0,0 0;background-size:4728px 5320px,100% 100%;background-repeat:no-repeat}
+.journey-world{height:8500px;background-color:#020516;background-image:url('/assets/visual-journey-background-v2.png'),linear-gradient(180deg,#020516 0,#05051c 48%,#10072a 74%,#02040f 100%);background-position:0 0,0 0;background-size:4728px 5320px,100% 100%;background-repeat:no-repeat}
 .j-collection{position:absolute;z-index:3;left:1960px;top:2555px;width:960px;padding:48px 40px 54px;background:linear-gradient(180deg,#20153e 0,#0e0d2b 47%,#07162f 48%,#160d29 100%);border:7px solid #f2a6cd;box-shadow:0 0 0 5px #46205e,0 0 0 10px #78cee0,15px 18px 0 #01020caa,0 0 42px #b067d366;transform:scale(.667);transform-origin:top left}
 .j-collection::before,.j-collection::after{content:'';position:absolute;left:54px;right:54px;height:9px;background:repeating-linear-gradient(90deg,#f5afce 0 11px,#734a8f 11px 18px,#76d2df 18px 25px,transparent 25px 31px)}
 .j-collection::before{top:14px}.j-collection::after{bottom:14px}

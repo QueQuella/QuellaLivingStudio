@@ -25,19 +25,22 @@ class Document(HTMLParser):
 
 document = Document()
 document.feed((root / "index.html").read_text())
+for component in sorted((root / "src/pages").glob("*.jsx")):
+    document.feed(component.read_text())
+document.feed((root / "src/components/TopNavigation.jsx").read_text())
 for resource in document.resources:
-    assert (root / resource).is_file(), resource
+    assert (root / "public" / resource).is_file(), resource
 for required in ["pdTitle", "pdQuestion", "pdAbout", "pdFilmTransition", "pdShowcase", "pdFurther", "programmingDream", "pdCanvas"]:
     assert required in document.ids
 for required in ["#programming-dream", "#log", "#idea"]:
     assert required in document.links
-for file in ["programming-dream.js", "dream-config.js", "dream-sections.mjs", "vendor/gltf/GLTFLoader.js", "vendor/gltf/BufferGeometryUtils.js"]:
+for file in ["src/runtime/programming-dream.js", "src/runtime/dream-config.js", "src/runtime/dream-sections.mjs", "public/vendor/gltf/GLTFLoader.js", "public/vendor/gltf/BufferGeometryUtils.js"]:
     source = (root / file).read_text()
     for imported in re.findall(r"(?:^import[\s\S]*?\bfrom\s*|import\()['\"]([^'\"]+)", source, re.MULTILINE):
         assert imported.startswith("."), f"Nonlocal module: {file} → {imported}"
         assert ((root / file).parent / imported).is_file(), f"Missing module: {imported}"
 
-binary = (root / "assets/programming-dream/computer.glb").read_bytes()
+binary = (root / "public/assets/programming-dream/computer.glb").read_bytes()
 magic, version, length = struct.unpack_from("<III", binary)
 assert magic == 0x46546C67 and version == 2 and length == len(binary)
 json_length, kind = struct.unpack_from("<II", binary, 12)
