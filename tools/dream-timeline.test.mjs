@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {timeline} from '../dream-timeline.mjs';
+import {timeline} from '../src/runtime/dream-timeline.mjs';
 
 test('the journey starts at sea and completes with an opaque dark portal', () => {
   const start = timeline(0), end = timeline(1);

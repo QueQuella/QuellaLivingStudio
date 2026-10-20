@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {scrollCoordinate, sectionMotion} from '../dream-sections.mjs';
+import {scrollCoordinate, sectionMotion} from '../src/runtime/dream-sections.mjs';
 
 test('nested section coordinates remain stable while their scroll parent moves', () => {
   assert.equal(scrollCoordinate(3876, 76, 0), 3800);

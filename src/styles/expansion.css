@@ -1,5 +1,5 @@
 /* Week 05: a map of experiments, references and reading. */
-.journey-world{width:4400px;height:5200px;background-color:#020411;background-image:url('./assets/visual-journey-background-v2.png'),radial-gradient(ellipse at 48% 65%,#181032 0,transparent 60%);background-position:1750px -60px,0 0;background-size:1500px auto,100% 100%;background-repeat:no-repeat}
+.journey-world{width:4400px;height:5200px;background-color:#020411;background-image:url('/assets/visual-journey-background-v2.png'),radial-gradient(ellipse at 48% 65%,#181032 0,transparent 60%);background-position:1750px -60px,0 0;background-size:1500px auto,100% 100%;background-repeat:no-repeat}
 .journey-world::after{inset:1150px 0 0;background:linear-gradient(180deg,transparent,#02041144 30%,#02041188);}
 .journey-intro{left:1690px;top:1050px;width:850px;transform:scale(.85)}
 .j-collection{left:520px;top:1530px}
