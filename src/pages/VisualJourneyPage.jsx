@@ -145,7 +145,7 @@ export default function VisualJourneyPage() {
             <article className="j-work">
               <div className="j-player">
                 <div className="j-player-bar"><span>▶ RETRO_RAGDOLL_V12.P5</span><span>ZERO GRAVITY / GESTURE</span></div>
-                <iframe id="journeyRagdoll" data-src="./art/retro-ragdoll/index.html?v=hand-tracking-2" title="Retro Ragdoll V12 — interactive zero-gravity gesture artwork" allow="camera 'self'; fullscreen" tabIndex="0"></iframe>
+                <iframe id="journeyRagdoll" data-src="./art/retro-ragdoll/index.html?v=hand-tracking-3" title="Retro Ragdoll V12 — interactive zero-gravity gesture artwork" allow="camera 'self'; fullscreen" tabIndex="0"></iframe>
                 <div className="j-player-controls"><span>CLICK CANVAS = SWITCH MODE · F / R · START / STOP = CAMERA</span><button id="journeyReloadRagdoll" aria-label="Restart Retro Ragdoll">↻</button></div>
               </div>
               <footer className="j-work-caption">
