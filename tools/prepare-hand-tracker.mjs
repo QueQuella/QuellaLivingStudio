@@ -9,6 +9,14 @@ import {fileURLToPath} from 'node:url';
 const require=createRequire(import.meta.url);
 const destination=new URL('../public/vendor/mediapipe/tfjs/',import.meta.url);
 mkdirSync(destination,{recursive:true});
+// Preserve the same MediaPipe Hands runtime used by the original standalone
+// sketch. The TFJS/WASM runtime below remains a fallback for browsers where
+// MediaPipe's video processing cannot initialize.
+const handsDirectory=new URL('../public/vendor/mediapipe/hands/',import.meta.url);
+mkdirSync(handsDirectory,{recursive:true});
+const handsPackage=dirname(require.resolve('@mediapipe/hands/package.json'));
+for(const file of readdirSync(handsPackage).filter(x=>/^(hands\.js|hands\.binarypb|hands_solution_.*\.(?:js|wasm|data)|hand_landmark_.*\.tflite|LICENSE)$/.test(x)))
+  copyFileSync(join(handsPackage,file),new URL(file,handsDirectory));
 await build({entryPoints:[fileURLToPath(new URL('hand-runtime.js',import.meta.url))],outfile:fileURLToPath(new URL('hand-runtime.mjs',destination)),bundle:true,format:'esm',platform:'browser',minify:true});
 const wasm=dirname(require.resolve('@tensorflow/tfjs-backend-wasm'));
 for(const file of readdirSync(wasm).filter(x=>x.endsWith('.wasm')))copyFileSync(join(wasm,file),new URL(file,destination));
