@@ -8,3 +8,5 @@
 .guide-row{display:grid;grid-template-columns:112px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid #273439}
 .guide-row span:first-child{font-weight:bold;color:#e6d99e;font-size:10px;letter-spacing:.4px}
 .guide-row span:last-child{color:#b3c6c7}
+
+#stage canvas{cursor:pointer;touch-action:manipulation}

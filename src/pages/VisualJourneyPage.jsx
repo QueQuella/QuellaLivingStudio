@@ -146,12 +146,12 @@ export default function VisualJourneyPage() {
               <div className="j-player">
                 <div className="j-player-bar"><span>▶ RETRO_RAGDOLL_V12.P5</span><span>ZERO GRAVITY / GESTURE</span></div>
                 <iframe id="journeyRagdoll" data-src="./art/retro-ragdoll/index.html" title="Retro Ragdoll V12 — interactive zero-gravity gesture artwork" allow="camera 'self'; fullscreen" tabIndex="0"></iframe>
-                <div className="j-player-controls"><span>CLICK THE CANVAS · SPACE / F / R · START = ENABLE CAMERA</span><button id="journeyReloadRagdoll" aria-label="Restart Retro Ragdoll">↻</button></div>
+                <div className="j-player-controls"><span>CLICK CANVAS = SWITCH MODE · F / R · START = ENABLE CAMERA</span><button id="journeyReloadRagdoll" aria-label="Restart Retro Ragdoll">↻</button></div>
               </div>
               <footer className="j-work-caption">
                 <h2 id="ragdollTitle">RETRO RAGDOLL / HUMAN FIELD</h2>
                 <time dateTime="2026-11">2026 / 11</time>
-                <p>A floating body meets a flock of micro swimmers. Use the keyboard to change the field, or press Start and allow camera access to guide the body with your palm.</p>
+                <p>A floating body meets a flock of micro swimmers. Click the artwork canvas to switch modes, or press Start and allow camera access to guide the body with your palm.</p>
                 <p>Camera access is optional. Hand tracking runs in your browser; camera frames are not uploaded.</p>
               </footer>
             </article>

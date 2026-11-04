@@ -26,13 +26,30 @@ let showRoom=false,reverseDirection=1,restPositions=[],lastAnchorPos=null;
 let warpBlend=0,warpStreams=[],prevHandDest=null;
 let startButton,camButton,resetButton,statusEl;
 let restOffsets=[];
+let trackingStatus='READY · PRESS START',starting=false;
+const HAND_ASSET_BASE=new URL('../../vendor/mediapipe/hands/',document.baseURI).href;
 let handMode='FLOAT', handAngle=0, handAngleValid=false;
 let handDirectionStrength=0;
 let lastPalmMotionTime=0, lastPalmInput=null;
 const BODY_COLLISION = {padding:2.5, strength:0.16, passes:2};
 
 function setup(){
-  const c=createCanvas(CFG.W,CFG.H,WEBGL);c.parent('stage');
+  let c;
+  try{c=createCanvas(CFG.W,CFG.H,WEBGL);}
+  catch(e){
+    document.getElementById('status').textContent='WEBGL UNAVAILABLE · Enable browser graphics acceleration and reload.';
+    document.getElementById('start').disabled=true;
+    noLoop();return;
+  }
+  c.parent('stage');
+  c.elt.setAttribute('aria-label','Retro human field — click to switch flock / meteor mode');
+  c.elt.dataset.mode='flock';
+  c.elt.addEventListener('click',e=>{
+    const rect=c.elt.getBoundingClientRect();
+    if(e.target!==c.elt||e.button!==0||e.clientX<rect.left||e.clientX>=rect.right||e.clientY<rect.top||e.clientY>=rect.bottom)return;
+    warp=!warp;reverseDirection*=-1;
+    c.elt.dataset.mode=warp?'meteor':'flock';
+  });
   pixelDensity(1);frameRate(60);
   bgLayer=createGraphics(CFG.W,CFG.H);bgLayer.pixelDensity(1);bgLayer.noSmooth();
   scanLayer=createGraphics(CFG.W,CFG.H);scanLayer.pixelDensity(1);
@@ -323,7 +340,7 @@ function drawOverlay(){
   g.textAlign(g.RIGHT,g.TOP);
   g.text(warp?'TIME WARP / METEOR STREAM':'ZERO-G / '+handMode,CFG.W-14,12);
   g.textAlign(g.LEFT,g.BOTTOM);g.textSize(11);
-  g.text('SPACE · FLOCK / METEOR    F · FLOW    R · RESET',14,CFG.H-12);
+  g.text('CLICK CANVAS · FLOCK / METEOR    F · FLOW    R · RESET',14,CFG.H-12);
 }
 
 function draw(){
@@ -359,7 +376,7 @@ function draw(){
   if(frameCount%12===0){
     statusEl.textContent=tracking
       ? `CAMERA ACTIVE · ${performance.now()-lastSeen<850?'HAND / '+handMode+' / '+Math.round(handAngle*180/Math.PI)+' DEG':'SEARCHING FOR HAND'} · ${round(frameRate())} FPS`
-      :'STOPPED · ZERO-G SIMULATION ACTIVE';
+      :trackingStatus;
   }
 }
 
@@ -512,7 +529,7 @@ function drawSwarm(){
 
 
 // TIME WARP: independent diagonal meteor field, NOT Reynolds flocking.
-// The original swimmers fade out; these streaks fade in on SPACE.
+// The original swimmers fade out; these streaks fade in on canvas click.
 function initWarpStreams(){
   warpStreams=[];
   for(let i=0;i<560;i++){
@@ -536,48 +553,80 @@ function drawWarpStreams(blend){
   pop();
 }
 
-window.addEventListener('pagehide',()=>{if(tracking)stopTracking();});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&tracking)stopTracking();});
+window.addEventListener('pagehide',()=>{if(tracking||starting)stopTracking();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&(tracking||starting))stopTracking();});
 
+function setTrackingStatus(message){trackingStatus=message;statusEl.textContent=message;}
+function withTrackingTimeout(promise,message){
+  let timer;
+  return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(message)),30000);})]).finally(()=>clearTimeout(timer));
+}
 async function toggleTracking(){
   if(tracking){stopTracking();return;}
-  startButton.disabled=true;statusEl.textContent='REQUESTING CAMERA...';
+  if(starting)return;
+  starting=true;
+  const generation=++trackingGeneration;
+  startButton.disabled=true;setTrackingStatus('REQUESTING CAMERA...');
   try{
     if(!navigator.mediaDevices?.getUserMedia)throw Error('HTTPS or localhost is required.');
-    camStream=await navigator.mediaDevices.getUserMedia({audio:false,video:{width:640,height:480,facingMode:'user'}});
-    video.srcObject=camStream;await video.play();
+    const stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{width:640,height:480,facingMode:'user'}});
+    if(generation!==trackingGeneration){stream.getTracks().forEach(t=>t.stop());return;}
+    camStream=stream;
+    video.srcObject=stream;await video.play();
+    if(generation!==trackingGeneration)return;
     cameraCanvas.width=video.videoWidth||640;
     cameraCanvas.height=video.videoHeight||480;
+    setTrackingStatus('LOADING HAND TRACKER...');
+    if(typeof Hands!=='function')throw Error('Hand tracker could not load. Reload the artwork.');
     if(!handsModel){
-      handsModel=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`});
-      handsModel.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:0.65,minTrackingConfidence:0.65});
+      handsModel=new Hands({locateFile:f=>HAND_ASSET_BASE+f});
+      handsModel.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:0.5,minTrackingConfidence:0.5});
       handsModel.onResults(onHands);
     }
-    tracking=true;trackingGeneration++;
+    await withTrackingTimeout(handsModel.initialize(),'Hand tracker loading timed out. Press START to retry.');
+    if(generation!==trackingGeneration)return;
+    tracking=true;
     startButton.textContent='STOP';
-    startButton.disabled=false;
-    processVideo(trackingGeneration);
+    setTrackingStatus('CAMERA ACTIVE · SEARCHING FOR HAND');
+    processVideo(generation);
   }catch(e){
-    console.error(e);statusEl.textContent='CAMERA ERROR: '+e.message;
-    if(camStream)camStream.getTracks().forEach(t=>t.stop());
-    camStream=null;startButton.disabled=false;startButton.textContent='START';
+    if(generation!==trackingGeneration)return;
+    console.error(e);stopTracking();
+    const message=e.name==='NotAllowedError'
+      ? 'CAMERA BLOCKED · Allow camera access for this website, then press START.'
+      : e.name==='NotFoundError' ? 'NO CAMERA FOUND · Connect a camera, then press START.'
+      : 'HAND TRACKING ERROR: '+e.message;
+    setTrackingStatus(message);
+    discardHandsModel();
+  }finally{
+    if(generation===trackingGeneration||!starting){starting=false;startButton.disabled=false;}
   }
 }
+function discardHandsModel(){
+  const failed=handsModel;handsModel=null;
+  if(failed)Promise.resolve().then(()=>failed.close()).catch(console.warn);
+}
 function stopTracking(){
-  tracking=false;trackingGeneration++;
+  tracking=false;starting=false;trackingGeneration++;
   if(camStream)camStream.getTracks().forEach(t=>t.stop());
   camStream=null;video.pause();video.srcObject=null;
   cameraCtx.clearRect(0,0,cameraCanvas.width,cameraCanvas.height);
   handPoints=null;handAngleValid=false;handMode='FLOAT';lastSeen=0;
-  startButton.textContent='START';
-  statusEl.textContent='STOPPED · PRESS START TO RESUME';
+  startButton.disabled=false;startButton.textContent='START';
+  setTrackingStatus('STOPPED · PRESS START TO RESUME');
 }
 async function processVideo(generation){
   if(!tracking||generation!==trackingGeneration)return;
   if(!busy&&video.readyState>=2){
     busy=true;
-    try{await handsModel.send({image:video});}
-    catch(e){console.warn('Hand frame:',e.message);}
+    try{await withTrackingTimeout(handsModel.send({image:video}),'Hand tracker stopped responding. Press START to retry.');}
+    catch(e){
+      if(generation===trackingGeneration){
+        console.error('Hand frame:',e);stopTracking();
+        setTrackingStatus('HAND TRACKING ERROR: '+e.message);
+        discardHandsModel();
+      }
+    }
     finally{busy=false;}
   }
   if(tracking&&generation===trackingGeneration)requestAnimationFrame(()=>processVideo(generation));
@@ -642,7 +691,6 @@ function drawHandPreview(points,palm){
   c.fillText('PALM: MOVE / MIDDLE FINGER: TILT',16,28);
 }
 function keyPressed(){
-  if(key===' '){warp=!warp;reverseDirection*=-1;return false;}
   if(key==='f'||key==='F'){CFG.swarmEnabled=!CFG.swarmEnabled;return false;}
   if(key==='r'||key==='R'){resetModel();return false;}
   if(key==='b'||key==='B'){showRoom=!showRoom;return false;}

@@ -7,13 +7,14 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node tools/prepare-hand-tracker.mjs && vite",
+    "build": "node tools/prepare-hand-tracker.mjs && vite build",
     "preview": "vite preview",
-    "test": "node --test tools/*.test.mjs",
+    "test": "node tools/prepare-hand-tracker.mjs && node --test tools/*.test.mjs",
     "check": "npm test && npm run build"
   },
   "dependencies": {
+    "@mediapipe/hands": "0.4.1675469240",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
