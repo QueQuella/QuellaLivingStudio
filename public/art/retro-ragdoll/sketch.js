@@ -134,7 +134,10 @@ function resetModel(){
 // All limbs remain free to drift through the same joint-length simulation.
 function simulate(){
   const now=performance.now();
-  const handActive=tracking && now-lastSeen<850;
+  // CPU inference can take longer than one animation frame. An explicit
+  // no-hand result clears handPoints immediately; keep a detected hand alive
+  // across slower frames so its movement continues to steer the body.
+  const handActive=tracking && !!handPoints && now-lastSeen<2500;
   handMode=handActive?'PALM + DIRECTION':'FLOAT';
 
   if(handActive){
@@ -375,7 +378,7 @@ function draw(){
   simulate();
   if(CFG.swarmEnabled)drawSwarm();
   for(const part of parts)drawPart(part);
-  if(tracking&&performance.now()-lastSeen<850){
+  if(tracking&&handPoints&&performance.now()-lastSeen<2500){
     const p=nodes[chestAnchor].p;
     push();translate(p.x,p.y,p.z+60);noStroke();
     emissiveMaterial(100,255,140);sphere(5,7,5);pop();

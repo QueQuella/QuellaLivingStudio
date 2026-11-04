@@ -75,3 +75,48 @@ test('STOP during an in-flight inference prevents late landmarks, status updates
   assert.equal(f.results.length,1);assert.equal(f.results[0].landmarks.length,0);
   assert.match(f.statuses.at(-1),/STOPPED/);assert.equal(f.frames.size,0);
 });
+test('original MediaPipe Hands video results feed 21 landmarks into the camera loop',async()=>{
+  const frames=new Map(),statuses=[];let frameId=0,closed=0,sendCount=0;
+  const landmarks=Array.from({length:21},(_,i)=>({x:.2+i*.01,y:.4,z:0}));
+  class Hands{
+    setOptions(options){assert.equal(options.modelComplexity,1);}
+    onResults(callback){this.callback=callback;}
+    async initialize(){}
+    async send(){sendCount++;this.callback({multiHandLandmarks:[landmarks]});}
+    close(){closed++;}
+  }
+  const sandbox={URL,console,window:{Hands},document:{currentScript:{src:'https://example.org/art/retro-ragdoll/hand-tracker.js'},createElement:()=>({}),head:{append(script){script.onload();}}},navigator:{mediaDevices:{}},setTimeout,clearTimeout,
+    requestAnimationFrame:fn=>{frames.set(++frameId,fn);return frameId;},cancelAnimationFrame:id=>frames.delete(id)};
+  vm.runInNewContext(controllerSource,sandbox);
+  const video={srcObject:null,play:async()=>{},pause(){},readyState:2,videoWidth:640,currentTime:1};
+  const stream={getTracks:()=>[{stop(){},addEventListener(){}}]};
+  const results=[];
+  const camera=new sandbox.window.RetroCameraController({video,getStream:async()=>stream,onState(){},onStatus:s=>statuses.push(s),onResults:r=>results.push(r)});
+  await camera.start();const first=[...frames.values()].at(-1);frames.clear();await first(100);
+  assert.equal(results.at(-1).landmarks[0].length,21);
+  assert.equal(results.at(-1).landmarks[0][0].x,.2);
+  assert.match(statuses.at(-1),/HAND DETECTED/);
+  video.currentTime=2;const second=[...frames.values()].at(-1);frames.clear();await second(160);
+  assert.equal(sendCount,2);camera.stop();await new Promise(setImmediate);assert.equal(closed,1);
+});
+test('consecutive hand landmark positions move the ragdoll target and change torso direction',()=>{
+  class Vector{
+    constructor(x=0,y=0,z=0){Object.assign(this,{x,y,z});}
+    copy(){return new Vector(this.x,this.y,this.z);}
+    lerp(v,a){this.x+=(v.x-this.x)*a;this.y+=(v.y-this.y)*a;this.z+=(v.z-this.z)*a;return this;}
+    set(v){Object.assign(this,v);return this;}
+    static dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);}
+  }
+  const sandbox={performance:{now:()=>1000},p5:{Vector},createVector:(...args)=>new Vector(...args),constrain:(v,a,b)=>Math.max(a,Math.min(b,v))};
+  const run=code=>vm.runInContext(code,context);
+  const context=vm.createContext(sandbox);run(source);
+  run('video={videoWidth:640,videoHeight:480};cameraCanvas={width:640,height:480};cameraCtx={clearRect(){},beginPath(){},moveTo(){},lineTo(){},stroke(){},arc(){},fill(){},fillText(){}};tracking=true;artworkReady=true;anchorTarget=createVector(0,0,0);');
+  const points=x=>Array.from({length:21},(_,i)=>({x:i===12?x+.06:i===17?x-.04:x,y:i===12?.3:.5,z:0}));
+  sandbox.first=points(.25);run('onHands({landmarks:[first]})');
+  const left=run('anchorTarget.x'),angleLeft=run('handAngle');
+  sandbox.second=points(.75);run('onHands({landmarks:[second]})');
+  assert.ok(run('anchorTarget.x')<left-100);
+  assert.ok(Number.isFinite(angleLeft));
+  assert.equal(run('handMode'), 'FLOAT'); // Updated in the animation loop.
+  assert.equal(run('handPoints.length'),21);
+});
