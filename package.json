@@ -14,12 +14,17 @@
     "check": "npm test && npm run build"
   },
   "dependencies": {
-    "@mediapipe/hands": "0.4.1675469240",
+    "@tensorflow-models/hand-pose-detection": "2.0.1",
+    "@tensorflow/tfjs-backend-cpu": "4.22.0",
+    "@tensorflow/tfjs-backend-wasm": "4.22.0",
+    "@tensorflow/tfjs-converter": "4.22.0",
+    "@tensorflow/tfjs-core": "4.22.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "6.1.2",
+    "esbuild": "0.28.2",
     "vite": "8.3.4"
   }
 }

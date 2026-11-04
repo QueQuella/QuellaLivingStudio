@@ -1,5 +1,5 @@
 /* RETRO TIME MACHINE — V12 CONTROLLED ZERO-G / GESTURE GUIDE
-   p5.js WEBGL + MediaPipe Hands
+   p5.js WEBGL + MediaPipe hand model / TensorFlow WASM
    V12: improved palm control, gentle anatomical shape recovery and limb damping
    Original 16 cuboid dimensions and 15 anatomical connections
    from user-supplied Rag Doll P5 reference.
@@ -18,27 +18,52 @@ const CFG={W:800,H:700,depth:700,gravity:0,drag:0.965,
   ribbonLength:42, ribbonSteps:15,
   flowResistance:0.63,modelScale:0.5};
 let nodes=[],links=[],parts=[],chestAnchor=null,anchorTarget=null;
-let handsModel=null,video=null,camStream=null,tracking=false,
-    busy=false,trackingGeneration=0,lastSeen=0,handPoints=null;
+let video=null,tracking=false,lastSeen=0,handPoints=null;
+let cameraController=null,artworkReady=false;
 let cameraCanvas,cameraCtx,swarm=[],warp=false,timePhase=0;
 let bgLayer,scanLayer,smoothedAnchor,anchorVelocity,backgroundPalette;
 let showRoom=false,reverseDirection=1,restPositions=[],lastAnchorPos=null;
 let warpBlend=0,warpStreams=[],prevHandDest=null;
 let startButton,camButton,resetButton,statusEl;
 let restOffsets=[];
-let trackingStatus='READY · PRESS START',starting=false;
-const HAND_ASSET_BASE=new URL('../../vendor/mediapipe/hands/',document.baseURI).href;
 let handMode='FLOAT', handAngle=0, handAngleValid=false;
 let handDirectionStrength=0;
 let lastPalmMotionTime=0, lastPalmInput=null;
 const BODY_COLLISION = {padding:2.5, strength:0.16, passes:2};
 
 function setup(){
+  video=document.getElementById('preview');
+  cameraCanvas=document.getElementById('hand-overlay');
+  cameraCtx=cameraCanvas.getContext('2d');
+  startButton=document.getElementById('start');
+  camButton=document.getElementById('toggle-preview');
+  resetButton=document.getElementById('reset');
+  statusEl=document.getElementById('status');
+  cameraController=new RetroCameraController({video,
+    onState:state=>{
+      tracking=state==='running';
+      startButton.textContent=state==='stopped'?'START':'STOP';
+      startButton.disabled=false;
+      startButton.setAttribute('aria-pressed',String(state!=='stopped'));
+      if(state==='stopped'){handPoints=null;handAngleValid=false;lastSeen=0;handMode='FLOAT';}
+    },
+    onStatus:message=>{statusEl.textContent=message;},
+    onResults:onHands,
+  });
+  startButton.onclick=()=>cameraController.toggle();
+  window.addEventListener('pagehide',()=>cameraController.stop());
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cameraController.stop();});
+  camButton.onclick=()=>{
+    const wrap=document.getElementById('camera-wrap');
+    wrap.hidden=!wrap.hidden;
+    camButton.textContent=wrap.hidden?'SHOW CAM':'HIDE CAM';
+  };
+  resetButton.onclick=resetModel;
   let c;
   try{c=createCanvas(CFG.W,CFG.H,WEBGL);}
   catch(e){
     document.getElementById('status').textContent='WEBGL UNAVAILABLE · Enable browser graphics acceleration and reload.';
-    document.getElementById('start').disabled=true;
+    document.getElementById('stage').textContent='3D graphics unavailable in this browser. Camera tracking is still available.';
     noLoop();return;
   }
   c.parent('stage');
@@ -54,21 +79,8 @@ function setup(){
   bgLayer=createGraphics(CFG.W,CFG.H);bgLayer.pixelDensity(1);bgLayer.noSmooth();
   scanLayer=createGraphics(CFG.W,CFG.H);scanLayer.pixelDensity(1);
   backgroundPalette=[[11,12,16],[28,32,48],[72,84,120],[140,160,180],[220,200,120],[240,120,80]];
-  video=document.getElementById('preview');
-  cameraCanvas=document.getElementById('hand-overlay');
-  cameraCtx=cameraCanvas.getContext('2d');
-  startButton=document.getElementById('start');
-  camButton=document.getElementById('toggle-preview');
-  resetButton=document.getElementById('reset');
-  statusEl=document.getElementById('status');
-  startButton.onclick=toggleTracking;
-  camButton.onclick=()=>{
-    const wrap=document.getElementById('camera-wrap');
-    wrap.hidden=!wrap.hidden;
-    camButton.textContent=wrap.hidden?'SHOW CAM':'HIDE CAM';
-  };
-  resetButton.onclick=resetModel;
   resetModel();
+  artworkReady=true;
   initFlow();
   initWarpStreams();
 }
@@ -373,11 +385,7 @@ function draw(){
   image(scanLayer,-width/2,-height/2,width,height);
   pop();
   drawingContext.enable(drawingContext.DEPTH_TEST);
-  if(frameCount%12===0){
-    statusEl.textContent=tracking
-      ? `CAMERA ACTIVE · ${performance.now()-lastSeen<850?'HAND / '+handMode+' / '+Math.round(handAngle*180/Math.PI)+' DEG':'SEARCHING FOR HAND'} · ${round(frameRate())} FPS`
-      :trackingStatus;
-  }
+
 }
 
 function drawRoom(){
@@ -553,88 +561,13 @@ function drawWarpStreams(blend){
   pop();
 }
 
-window.addEventListener('pagehide',()=>{if(tracking||starting)stopTracking();});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&(tracking||starting))stopTracking();});
-
-function setTrackingStatus(message){trackingStatus=message;statusEl.textContent=message;}
-function withTrackingTimeout(promise,message){
-  let timer;
-  return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(message)),30000);})]).finally(()=>clearTimeout(timer));
-}
-async function toggleTracking(){
-  if(tracking){stopTracking();return;}
-  if(starting)return;
-  starting=true;
-  const generation=++trackingGeneration;
-  startButton.disabled=true;setTrackingStatus('REQUESTING CAMERA...');
-  try{
-    if(!navigator.mediaDevices?.getUserMedia)throw Error('HTTPS or localhost is required.');
-    const stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{width:640,height:480,facingMode:'user'}});
-    if(generation!==trackingGeneration){stream.getTracks().forEach(t=>t.stop());return;}
-    camStream=stream;
-    video.srcObject=stream;await video.play();
-    if(generation!==trackingGeneration)return;
-    cameraCanvas.width=video.videoWidth||640;
-    cameraCanvas.height=video.videoHeight||480;
-    setTrackingStatus('LOADING HAND TRACKER...');
-    if(typeof Hands!=='function')throw Error('Hand tracker could not load. Reload the artwork.');
-    if(!handsModel){
-      handsModel=new Hands({locateFile:f=>HAND_ASSET_BASE+f});
-      handsModel.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:0.5,minTrackingConfidence:0.5});
-      handsModel.onResults(onHands);
-    }
-    await withTrackingTimeout(handsModel.initialize(),'Hand tracker loading timed out. Press START to retry.');
-    if(generation!==trackingGeneration)return;
-    tracking=true;
-    startButton.textContent='STOP';
-    setTrackingStatus('CAMERA ACTIVE · SEARCHING FOR HAND');
-    processVideo(generation);
-  }catch(e){
-    if(generation!==trackingGeneration)return;
-    console.error(e);stopTracking();
-    const message=e.name==='NotAllowedError'
-      ? 'CAMERA BLOCKED · Allow camera access for this website, then press START.'
-      : e.name==='NotFoundError' ? 'NO CAMERA FOUND · Connect a camera, then press START.'
-      : 'HAND TRACKING ERROR: '+e.message;
-    setTrackingStatus(message);
-    discardHandsModel();
-  }finally{
-    if(generation===trackingGeneration||!starting){starting=false;startButton.disabled=false;}
-  }
-}
-function discardHandsModel(){
-  const failed=handsModel;handsModel=null;
-  if(failed)Promise.resolve().then(()=>failed.close()).catch(console.warn);
-}
-function stopTracking(){
-  tracking=false;starting=false;trackingGeneration++;
-  if(camStream)camStream.getTracks().forEach(t=>t.stop());
-  camStream=null;video.pause();video.srcObject=null;
-  cameraCtx.clearRect(0,0,cameraCanvas.width,cameraCanvas.height);
-  handPoints=null;handAngleValid=false;handMode='FLOAT';lastSeen=0;
-  startButton.disabled=false;startButton.textContent='START';
-  setTrackingStatus('STOPPED · PRESS START TO RESUME');
-}
-async function processVideo(generation){
-  if(!tracking||generation!==trackingGeneration)return;
-  if(!busy&&video.readyState>=2){
-    busy=true;
-    try{await withTrackingTimeout(handsModel.send({image:video}),'Hand tracker stopped responding. Press START to retry.');}
-    catch(e){
-      if(generation===trackingGeneration){
-        console.error('Hand frame:',e);stopTracking();
-        setTrackingStatus('HAND TRACKING ERROR: '+e.message);
-        discardHandsModel();
-      }
-    }
-    finally{busy=false;}
-  }
-  if(tracking&&generation===trackingGeneration)requestAnimationFrame(()=>processVideo(generation));
-}
 function onHands(result){
+  if(video.videoWidth&&cameraCanvas.width!==video.videoWidth){
+    cameraCanvas.width=video.videoWidth;cameraCanvas.height=video.videoHeight;
+  }
   cameraCtx.clearRect(0,0,cameraCanvas.width,cameraCanvas.height);
   if(!tracking)return;
-  const points=result.multiHandLandmarks?.[0];
+  const points=result.landmarks?.[0];
   if(!points){handPoints=null;handAngleValid=false;return;}
   handPoints=points;lastSeen=performance.now();
   const palmIDs=[0,5,9,13,17];
@@ -642,6 +575,8 @@ function onHands(result){
   for(const id of palmIDs){x+=points[id].x;y+=points[id].y;z+=points[id].z;}
   x/=palmIDs.length;y/=palmIDs.length;z/=palmIDs.length;
   const palm={x,y,z};
+  drawHandPreview(points,palm);
+  if(!artworkReady)return;
   // Palm motion translates the whole body; no per-finger targets.
   const nx=CFG.mirror?1-x:x;
   const dest=createVector((nx-.5)*CFG.palmRangeX,(y-.5)*CFG.palmRangeY,
@@ -667,7 +602,6 @@ function onHands(result){
       : angle;
     handAngleValid=true;
   }
-  drawHandPreview(points,palm);
 }
 
 function drawHandPreview(points,palm){

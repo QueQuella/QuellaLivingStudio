@@ -39,3 +39,4 @@ coverage/
 
 # Copied from the pinned npm package before dev/build.
 public/vendor/mediapipe/hands/
+public/vendor/mediapipe/tfjs/
