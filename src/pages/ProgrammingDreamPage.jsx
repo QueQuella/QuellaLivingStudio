@@ -92,15 +92,17 @@ export default function ProgrammingDreamPage() {
             </p>
             <div>
               <p className="pd-pitch">
-                <em>Programming Dream</em> is a small interactive art experiment
-                set in a dreamlike digital ocean. A floating computer invites
-                players to draw abstract patterns, which a trained neural
-                network interprets as one of six low-poly creatures. These
-                handmade creatures emerge into the sea, turning each drawing
-                into an encounter between what a person imagines and what a
-                machine recognises. Through rough textures, uncertain forms, and
-                moments of surprise, I explore how digital life can leave room
-                for our own imagination.
+                Programming Dream is an interactive digital environment inspired
+                by the early history of computer graphics and retro-futuristic
+                visions of computing. Through drawing, participants communicate
+                with a fictional machine that interprets their sketches and
+                reconstructs iconic objects from computer graphics history.
+                Emerging from points, wireframes, and imperfect surfaces, these
+                digital artifacts become animated inhabitants of a surreal
+                computational space. The project explores how machines translate
+                human imagination into visual form, and how the aesthetics of
+                early computing continue to shape our understanding of digital
+                worlds.
               </p>
             </div>
           </div>

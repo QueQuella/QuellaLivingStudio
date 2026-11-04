@@ -88,14 +88,4 @@
     if (!presentation.hidden) updateIndex();
   });
   markSlide(0);
-  document.addEventListener("click", (e) => {
-    const a = e.target.closest("[data-log-slot]");
-    if (!a) return;
-    setTimeout(() => {
-      const btn = document.querySelector(
-        '.archive-card[data-index="' + a.dataset.logSlot + '"][data-cycle="0"]',
-      );
-      btn?.click();
-    }, 60);
-  });
 })();

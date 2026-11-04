@@ -730,6 +730,14 @@
   document.addEventListener("click", (e) => {
     const a = e.target.closest('a[href^="#"]');
     if (!a) return;
+    if (a.hasAttribute("data-log-slot")) {
+      const slot = Number(a.dataset.logSlot);
+      if (!Number.isInteger(slot) || slot < 0 || slot >= notes.length) return;
+      e.preventDefault();
+      mode = "log";
+      openCard(slot);
+      return;
+    }
     const id = a.hash.slice(1);
     if (!validRoute(id)) return;
     e.preventDefault();
@@ -1294,6 +1302,12 @@
       $("detailSections").innerHTML = isLog
         ? window.StudioEntries.log[index]
         : window.StudioEntries.visual;
+      if (isLog) {
+        // Journal images are illustrations, never image-viewer links.
+        $("detailSections").querySelectorAll("a").forEach((link) => {
+          if (link.querySelector("img")) link.replaceWith(...link.childNodes);
+        });
+      }
       prepareAuthoredEntry();
     } else if (isLog) {
       const wrap = document.createElement("section");

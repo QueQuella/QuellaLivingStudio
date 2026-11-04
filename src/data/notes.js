@@ -36,10 +36,19 @@ window.StudioNotes = [
     summary: "Drawing UI · Computer interaction · Close & reset",
     project: "programming-dream",
   },
-  ...Array.from({ length: 13 }, (_, i) => ({
-    id: "note-" + String(i + 6).padStart(2, "0"),
-    title: "Programming Dream / Log " + String(i + 6).padStart(2, "0"),
-    shortTitle: "Dream / Log " + String(i + 6).padStart(2, "0"),
+  {
+    id: "note-06",
+    title: "W7_Iteration2",
+    shortTitle: "Dream / W7 Iteration2",
+    date: "2026.10.21",
+    type: "Programming Dream / Development Log",
+    summary: "Iteration2 concept · Visual display · Scene building",
+    project: "programming-dream",
+  },
+  ...Array.from({ length: 12 }, (_, i) => ({
+    id: "note-" + String(i + 7).padStart(2, "0"),
+    title: "Programming Dream / Log " + String(i + 7).padStart(2, "0"),
+    shortTitle: "Dream / Log " + String(i + 7).padStart(2, "0"),
     date: "—.—.—",
     type: "Programming Dream / Upcoming Log",
     project: "programming-dream",

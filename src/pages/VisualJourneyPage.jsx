@@ -1,3 +1,6 @@
+import JourneyReferenceFrame from "../components/JourneyReferenceFrame.jsx";
+import { filmEffects, retroFuturism } from "../data/journey-references.js";
+
 // Existing page content; interactive regions are owned by src/runtime.
 export default function VisualJourneyPage() {
   return (
@@ -22,7 +25,7 @@ export default function VisualJourneyPage() {
               <br />
               <em>Visual Journey.</em>
             </h1>
-            <span>DRAG THE STARFIELD TO EXPLORE · 03 JOURNEYS ONLINE</span>
+            <span>DRAG THE STARFIELD TO EXPLORE · 05 JOURNEYS ONLINE</span>
           </header>
 
           <section
@@ -226,6 +229,7 @@ export default function VisualJourneyPage() {
             <br />
             BEAM COUNT 64
           </div>
+          <div className="journey-reference-column">
           <section
             id="journeyCollection02"
             className="journey-ref-frame journey-ref-two journey-frame-target"
@@ -644,9 +648,13 @@ export default function VisualJourneyPage() {
             </footer>
           </section>
 
+          <JourneyReferenceFrame number="04" title="FILM VISUAL EFFECTS" subtitle="2026 / 10 · FOUR CINEMATIC SIGNALS" entries={filmEffects} />
+          <JourneyReferenceFrame number="05" title="RETRO-FUTURISM" subtitle="2026 / 10 · FIVE FUTURES FROM THE PAST" entries={retroFuturism} />
+          </div>
+
           <div className="map-zone-label zone-own">01 / MY EXPERIMENTS</div>
           <div className="map-zone-label zone-references">
-            02 + 03 / VISUAL REFERENCES
+            02–05 / VISUAL REFERENCES
           </div>
           <aside
             className="jodi-card journey-frame-target"
@@ -725,16 +733,16 @@ export default function VisualJourneyPage() {
               OPEN READING RESPONSES
             </a>
           </aside>
-          <a className="journey-project journey-frame-target" href="#project">
+          <article className="journey-project journey-frame-target">
             <p className="pixel-kicker">PROJECT / LEVEL SELECT</p>
             <img
-              src="./assets/week05/programming-dream.png"
+              src="./assets/working-log/week07/mainmenu.png"
               alt="Programming Dream starting interface, a computer floating on a dreamlike sea"
             />
             <h2>Programming Dream</h2>
             <p>A digital living system, learning to inhabit a dream.</p>
-            <span>ENTER PROJECT</span>
-          </a>
+            <a href="#project">ENTER PROJECT</a>
+          </article>
           <div className="j-work-divider divider-after" aria-hidden="true">
             <i></i>
             <span>NEXT PORTAL · STILL DREAMING</span>

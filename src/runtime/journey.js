@@ -11,12 +11,25 @@
   let entered = false,
     drag = null,
     active = false;
+  const referenceColumn = document.querySelector(".journey-reference-column");
+  function fitReferenceWorld() {
+    if (!active || !referenceColumn) return;
+    const bottom = referenceColumn.offsetTop + referenceColumn.offsetHeight * 0.667;
+    // Extra references sit beside their own main board, not in the main column.
+    const journeyThree = document.getElementById("journeyCollection03");
+    document.querySelector(".jodi-card").style.top =
+      Math.round(referenceColumn.offsetTop + journeyThree.offsetTop * 0.667 + 50) + "px";
+    world.style.height = Math.max(8500, Math.ceil(bottom + 450)) + "px";
+    world.querySelector(".divider-after").style.top = Math.ceil(bottom + 180) + "px";
+  }
+  new ResizeObserver(fitReferenceWorld).observe(referenceColumn);
   function view(smooth = true) {
     const anchor = document.getElementById("journeyCollection02");
-    const displayedWidth = anchor.offsetWidth * 0.667;
+    const bounds = anchor.getBoundingClientRect();
+    const viewportBounds = viewport.getBoundingClientRect();
     viewport.scrollTo({
-      left: anchor.offsetLeft - (viewport.clientWidth - displayedWidth) / 2,
-      top: Math.max(0, anchor.offsetTop - 230),
+      left: viewport.scrollLeft + bounds.left - viewportBounds.left - (viewport.clientWidth - bounds.width) / 2,
+      top: Math.max(0, viewport.scrollTop + bounds.top - viewportBounds.top - 230),
       behavior: smooth && !reduced ? "smooth" : "instant",
     });
   }
@@ -119,6 +132,7 @@
   window.VisualJourney = {
     enter() {
       active = true;
+      fitReferenceWorld();
       frame.src = frame.dataset.src;
       frame2.src = frame2.dataset.src;
       if (!entered) {

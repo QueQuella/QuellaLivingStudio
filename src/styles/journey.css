@@ -128,3 +128,10 @@
 .journey-ref-two::after{box-shadow:0 0 12px #ff7fbd}.journey-ref-three .ref-frame-head p,.journey-ref-three .ref-copy h3{color:#93e7ef}.journey-ref-three .ref-copy .ref-learn{color:#ffc0dc}.journey-ref-three .ref-media{border-color:#f09bc7;box-shadow:0 0 0 4px #263a77,8px 9px 0 #02030d,0 0 20px #e66fad44}
 .journey-ref-two>.journey-ref-row:nth-of-type(odd) .ref-media,.journey-ref-three>.journey-ref-row:nth-of-type(even) .ref-media{transform:translateY(-2px)}
 @media(max-width:700px){.journey-world{height:8500px}.journey-ref-frame{left:1860px;width:1120px}.journey-ref-two{top:4560px}.journey-ref-three{top:6240px}}
+
+/* References share one flowing column, so longer English copy never overlaps. */
+.journey-reference-column{position:absolute;z-index:4;left:1710px;top:1530px;width:1200px;display:flex;flex-direction:column;gap:180px;transform:scale(.667);transform-origin:top left}
+.journey-reference-column .journey-ref-frame{position:relative;left:auto;top:auto;width:100%;transform:none;flex:none}
+.journey-ref-04{background:linear-gradient(180deg,#0c2340f4,#12102ff5 50%,#28113af2);border-color:#77d8e4;box-shadow:0 0 0 6px #253d78,0 0 0 12px #e684b4,18px 20px 0 #01020ccc,0 0 48px #61d9ec55}
+.journey-ref-05{border-color:#e8c88d;background:linear-gradient(180deg,#292039f4,#10162df5 50%,#281d37f2)}
+.ref-copy .ref-credit{display:block;font:11px/1.6 'DM Mono',monospace;color:#b5a8cc;margin-top:16px}
