@@ -10,3 +10,8 @@
 .guide-row span:last-child{color:#b3c6c7}
 
 #stage canvas{cursor:pointer;touch-action:manipulation}
+.mode-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:26px;padding-top:18px;border-top:1px solid #35474a}
+.mode-gallery figure{margin:0;display:flex;flex-direction:column;min-width:0;background:#050709;border:1px solid #4a5659}
+.mode-gallery img{display:block;width:100%;height:clamp(240px,36vw,470px);object-fit:cover;object-position:center}
+.mode-gallery figcaption{padding:9px 11px;color:#a8e8dd;font-size:10px;letter-spacing:1.4px;border-top:1px solid #35474a}
+@media(max-width:700px){.mode-gallery{grid-template-columns:1fr}.mode-gallery img{height:auto;aspect-ratio:1.11/1;object-fit:cover}}
