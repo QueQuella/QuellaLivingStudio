@@ -1,9 +1,56 @@
 /* Camera lifecycle is independent of the p5/WebGL renderer. */
 (() => {
   const assets=new URL('../../vendor/mediapipe/tfjs/',document.currentScript.src).href;
-  async function createDetector(){
+  const handsAssets=new URL('../../vendor/mediapipe/hands/',document.currentScript.src).href;
+  async function createWasmDetector(){
     const runtime=await import(assets+'hand-runtime.mjs');
     return runtime.createDetector(assets);
+  }
+  let handsScript;
+  function loadHandsScript(){
+    return handsScript??=new Promise((resolve,reject)=>{
+      const script=document.createElement('script');
+      script.src=handsAssets+'hands.js';
+      script.onload=resolve;
+      script.onerror=()=>reject(Error('MediaPipe Hands script could not load'));
+      document.head.append(script);
+    });
+  }
+  async function createDetector(){
+    try{
+      await loadHandsScript();
+      const hands=new window.Hands({locateFile:file=>handsAssets+file});
+      hands.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.65,minTrackingConfidence:.65});
+      let callback;
+      hands.onResults(result=>callback?.(result));
+      await hands.initialize();
+      let fallback=null,closed=false,handsClosed=false;
+      const closeHands=()=>{if(!handsClosed){handsClosed=true;hands.close();}};
+      return {
+        async detectForVideo(input){
+          if(fallback)return fallback.detectForVideo(input);
+          try{
+            const result=await new Promise((resolve,reject)=>{
+              callback=resolve;
+              hands.send({image:input}).catch(reject);
+            });
+            callback=null;
+            return {landmarks:result.multiHandLandmarks||[]};
+          }catch(error){
+            callback=null;
+            if(closed)throw error;
+            console.warn('MediaPipe Hands failed; switching to WASM hand tracking',error);
+            closeHands();
+            fallback=await createWasmDetector();
+            return fallback.detectForVideo(input);
+          }
+        },
+        close(){closed=true;callback=null;closeHands();fallback?.close();},
+      };
+    }catch(error){
+      console.warn('MediaPipe Hands unavailable; using WASM hand tracking',error);
+      return createWasmDetector();
+    }
   }
   class RetroCameraController{
     constructor({video,onState,onStatus,onResults,makeDetector=createDetector,getStream=()=>{if(!navigator.mediaDevices?.getUserMedia)throw Error('Camera access requires HTTPS and a supported browser.');return navigator.mediaDevices.getUserMedia({audio:false,video:{width:{ideal:640},height:{ideal:480},facingMode:'user'}});}}){
