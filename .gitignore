@@ -1,7 +1,6 @@
 node_modules/
 dist/
-.env
-.env.*
+.env*
 !.env.example
 *.local
 .DS_Store
@@ -9,3 +8,31 @@ Thumbs.db
 npm-debug.log*
 playwright-report/
 test-results/
+
+# Credentials and private local material (public display assets stay tracked).
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+secrets/
+private/
+private-assets/
+source-artworks/
+*.blend
+*.blend1
+*.fbx
+*.psd
+*.aep
+*.prproj
+
+# Generated files and editor caches.
+build/
+coverage/
+.cache/
+.vite/
+*.log
+*.tmp
+*.swp
+*~

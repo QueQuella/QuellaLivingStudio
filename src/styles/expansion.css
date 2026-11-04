@@ -141,3 +141,7 @@
 .week07-entry blockquote{margin:28px 0;padding:1px 22px;border-left:2px solid var(--accent);background:#10191b}
 @media(max-width:760px){.week07-row{grid-template-columns:1fr;gap:18px}.week07-row h3{font-size:15px}}
 .journey-project a{display:inline-block;margin-top:24px;padding:12px 20px;border:3px outset #a1c5ce;background:#28384c;font:13px 'Silkscreen',monospace}
+
+/* The second experiment grows leftwards, preserving the three-column map. */
+.j-collection.ragdoll-collection{left:280px;top:3000px;width:1320px}
+.ragdoll-collection .j-player iframe{height:1080px;aspect-ratio:auto}

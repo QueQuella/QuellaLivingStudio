@@ -6,6 +6,7 @@
     collections = [...document.querySelectorAll(".journey-frame-target")],
     frame = document.getElementById("journeyArtwork"),
     frame2 = document.getElementById("journeyPart2"),
+    ragdoll = document.getElementById("journeyRagdoll"),
     locate = document.getElementById("journeyLocate");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let entered = false,
@@ -15,6 +16,8 @@
   function fitReferenceWorld() {
     if (!active || !referenceColumn) return;
     const bottom = referenceColumn.offsetTop + referenceColumn.offsetHeight * 0.667;
+    const ragdollCollection = document.getElementById("journeyRagdollCollection");
+    ragdollCollection.style.top = Math.ceil(collection.offsetTop + collection.offsetHeight * 0.667 + 160) + "px";
     // Extra references sit beside their own main board, not in the main column.
     const journeyThree = document.getElementById("journeyCollection03");
     document.querySelector(".jodi-card").style.top =
@@ -23,6 +26,7 @@
     world.querySelector(".divider-after").style.top = Math.ceil(bottom + 180) + "px";
   }
   new ResizeObserver(fitReferenceWorld).observe(referenceColumn);
+  new ResizeObserver(fitReferenceWorld).observe(collection);
   function view(smooth = true) {
     const anchor = document.getElementById("journeyCollection02");
     const bounds = anchor.getBoundingClientRect();
@@ -59,6 +63,15 @@
   document.getElementById("journeyReload2").onclick = () => {
     frame2.src = frame2.dataset.src;
   };
+  document.getElementById("journeyReloadRagdoll").onclick = () => {
+    ragdoll.src = ragdoll.dataset.src;
+  };
+  ragdoll.addEventListener("pointerenter", () => {
+    document.getElementById("magicCursor").style.opacity = "0";
+  });
+  ragdoll.addEventListener("pointerleave", () => {
+    document.getElementById("magicCursor").style.opacity = "1";
+  });
   frame.addEventListener("pointerenter", () => {
     const cursor = document.getElementById("magicCursor");
     if (cursor) cursor.style.opacity = "0";
@@ -135,6 +148,7 @@
       fitReferenceWorld();
       frame.src = frame.dataset.src;
       frame2.src = frame2.dataset.src;
+      ragdoll.src = ragdoll.dataset.src;
       if (!entered) {
         entered = true;
         view(false);
@@ -149,6 +163,7 @@
       end();
       frame.removeAttribute("src");
       frame2.removeAttribute("src");
+      ragdoll.removeAttribute("src");
       const cursor = document.getElementById("magicCursor");
       if (cursor) cursor.style.opacity = "1";
     },
