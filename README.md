@@ -90,3 +90,18 @@ comment service. The gameplay video slot remains intentionally empty.
 
 See [migration notes](docs/frontend-migration.md) and
 [Programming Dream integration notes](docs/programming-dream-web.md).
+
+
+### Retro Ragdoll camera controls
+
+Press START to enable the webcam and local hand tracking. The same button becomes
+STOP immediately, including while permission or models are pending. STOP releases
+all camera tracks, clears the preview and stops inference. Returning to START
+allows another session. The camera must be allowed for the HTTPS website.
+
+The hand model runs with TensorFlow.js WASM (CPU fallback); it does not require
+WebGL. The original p5 3D artwork still uses WebGL. Runtime JS, WASM and both model
+files are served from this website. `npm run dev`, `npm test` and `npm run build`
+prepare the pinned assets; first preparation downloads checksum-verified models
+from the official TensorFlow Hub URLs. Subsequent preparations reuse local files.
+Only clicks within the main artwork canvas switch flock/meteor modes.
