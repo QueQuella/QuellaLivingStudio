@@ -159,3 +159,8 @@
 .prototype-table th:nth-child(2){width:47%}
 .prototype-table .prototype-image{display:block;width:min(100%,var(--log-image-width,100%));margin:0 0 8px;border:1px solid var(--line)}
 .prototype-table .prototype-image + br{display:none}
+
+.retro-experiment-log .retro-experiment-card{text-decoration:none;color:#e7eee4}
+.retro-experiment-log .project-post-content p{margin:0 0 12px}
+.retro-experiment-log li+li{margin-top:12px}
+.retro-experiment-log .project-log-gallery img{border:1px solid var(--line)}

@@ -20,6 +20,10 @@ window.StudioEntries.log[7] = `
       <figure><img class="prototype-image" src="./assets/working-log/prototype/20261106232433.webp" alt="Spotlight moving above the CRT" loading="lazy"></figure>
       <figure><img class="prototype-image" src="./assets/working-log/prototype/20261106232636.webp" alt="Spotlight spline and Blueprint" loading="lazy"></figure>
     </div>
+    <figure class="project-log-wide">
+      <img src="./assets/working-log/prototype/all-vfx-objects.webp" alt="All five prototype objects together in the Programming Dream scene" loading="lazy">
+      <figcaption>All five object effects in the Unreal Engine scene.</figcaption>
+    </figure>
   </section>
   <section>
     <h2>02 / PROBLEM &amp; SOLUTION</h2>
@@ -35,5 +39,5 @@ window.StudioEntries.log[7] = `
     <h2>03 / NEXT</h2>
     <ol><li>UIUX</li><li>Information/explanation for the five objects in UI both canvas and setting, and maybe visual display</li><li>level BP &amp; WBP BP</li><li>demo video</li></ol>
   </section>
-  <footer class="entry-footer">Programming Dream · Development Log</footer>
+  <footer class="entry-footer">Programming Dream · Development Log<a href="#log" data-log-slot="8">Next cassette / Retro Time Machine →</a></footer>
 </article>`;

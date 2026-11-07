@@ -63,10 +63,19 @@ window.StudioNotes = [
     summary: "Five object effects · Disco spotlight · Blueprint debugging",
     project: "programming-dream",
   },
-  ...Array.from({ length: 10 }, (_, i) => ({
-    id: "note-" + String(i + 9).padStart(2, "0"),
-    title: "Programming Dream / Log " + String(i + 9).padStart(2, "0"),
-    shortTitle: "Dream / Log " + String(i + 9).padStart(2, "0"),
+  {
+    id: "note-09",
+    title: "Retro Time Machine / Human Field",
+    shortTitle: "Retro Time Machine",
+    date: "2026.11.07",
+    type: "Visual Journey / Experiment Log",
+    summary: "Zero-gravity motion · Particle fields · Webcam interaction",
+    cover: "./art/retro-ragdoll/mode-flock.png",
+  },
+  ...Array.from({ length: 9 }, (_, i) => ({
+    id: "note-" + String(i + 10).padStart(2, "0"),
+    title: "Programming Dream / Log " + String(i + 10).padStart(2, "0"),
+    shortTitle: "Dream / Log " + String(i + 10).padStart(2, "0"),
     date: "—.—.—",
     type: "Programming Dream / Upcoming Log",
     project: "programming-dream",

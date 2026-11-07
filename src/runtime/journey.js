@@ -11,7 +11,8 @@
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let entered = false,
     drag = null,
-    active = false;
+    active = false,
+    destination = null;
   const referenceColumn = document.querySelector(".journey-reference-column");
   function fitReferenceWorld() {
     if (!active || !referenceColumn) return;
@@ -27,13 +28,13 @@
   }
   new ResizeObserver(fitReferenceWorld).observe(referenceColumn);
   new ResizeObserver(fitReferenceWorld).observe(collection);
-  function view(smooth = true) {
-    const anchor = document.getElementById("journeyCollection02");
+  function view(smooth = true, target = null) {
+    const anchor = document.getElementById(target || "journeyCollection02");
     const bounds = anchor.getBoundingClientRect();
     const viewportBounds = viewport.getBoundingClientRect();
     viewport.scrollTo({
       left: viewport.scrollLeft + bounds.left - viewportBounds.left - (viewport.clientWidth - bounds.width) / 2,
-      top: Math.max(0, viewport.scrollTop + bounds.top - viewportBounds.top - 230),
+      top: Math.max(0, viewport.scrollTop + bounds.top - viewportBounds.top - (target ? 24 : 230)),
       behavior: smooth && !reduced ? "smooth" : "instant",
     });
   }
@@ -134,7 +135,7 @@
     }
   });
   window.addEventListener("resize", () => {
-    if (active) view(false);
+    if (active) view(false, destination);
   });
   const sparkles = world.querySelector(".journey-sparkles");
   for (let i = 0; i < 650; i++) {
@@ -143,17 +144,20 @@
     sparkles.append(star);
   }
   window.VisualJourney = {
-    enter() {
+    enter(target = null) {
       active = true;
+      destination = target;
       fitReferenceWorld();
       frame.src = frame.dataset.src;
       frame2.src = frame2.dataset.src;
       ragdoll.src = ragdoll.dataset.src;
-      if (!entered) {
+      if (target) {
+        view(false, target);
+      } else if (!entered) {
         entered = true;
         view(false);
         setTimeout(() => {
-          if (active) view(false);
+          if (active && !destination) view(false);
         }, 900);
       }
     },

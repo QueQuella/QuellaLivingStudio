@@ -7,9 +7,9 @@
     root + "internet-art.jpeg",
     root + "algorithm-map.png",
   ];
-  // Every project log from tape 05 onward shares one cover, including future slots.
+  // Individual log covers take precedence over the shared project artwork.
   window.getLogCover = (i) =>
-    i >= 4 ? window.ProjectLogCover : readingCovers[i];
+    window.StudioNotes[i]?.cover || (i >= 4 ? window.ProjectLogCover : readingCovers[i]);
   window.LogCovers = window.StudioNotes.map((_, i) => window.getLogCover(i));
   const presentation = document.getElementById("ideaSettings");
   const index = presentation.querySelector(".dream-index");

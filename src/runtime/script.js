@@ -472,7 +472,11 @@
     });
   }
 
+  const retroJourneyRoute = "visual/retro-time-machine";
   function navigate(id, push = true) {
+    const destination = id;
+    const openRetroExperiment = id === retroJourneyRoute;
+    if (openRetroExperiment) id = "visual";
     window.ProgrammingDream?.setActive(id === "programming-dream");
     window.VHSArchive?.setActive(id === "log");
     if (route === "visual" && id !== "visual") window.VisualJourney.leave();
@@ -495,7 +499,7 @@
           slot: id === "visual" || id === "log" ? indices[id] : index,
         },
         "",
-        "#" + id,
+        "#" + destination,
       );
     if (id === "home") {
       setView("home");
@@ -507,8 +511,12 @@
       mode = id;
       index = 0;
       setView("visualMap");
-      window.VisualJourney.enter();
-      $("journeyTitle").focus({ preventScroll: true });
+      window.VisualJourney.enter(
+        openRetroExperiment ? "journeyRagdollCollection" : null,
+      );
+      $(openRetroExperiment ? "journeyViewport" : "journeyTitle").focus({
+        preventScroll: true,
+      });
       return;
     }
     if (id === "log") {
@@ -759,6 +767,7 @@
     [
       "home",
       "visual",
+      retroJourneyRoute,
       "log",
       "detail",
       "idea",
@@ -1303,9 +1312,11 @@
         ? window.StudioEntries.log[index]
         : window.StudioEntries.visual;
       if (isLog) {
-        // Journal images are illustrations, never image-viewer links.
+        // Unwrap image-only viewer links and preserve illustrated navigation cards.
         $("detailSections").querySelectorAll("a").forEach((link) => {
-          if (link.querySelector("img")) link.replaceWith(...link.childNodes);
+          if (link.querySelector("img") && !link.textContent.trim()) {
+            link.replaceWith(...link.childNodes);
+          }
         });
       }
       prepareAuthoredEntry();
