@@ -45,17 +45,26 @@ jobs:
               const legacy = data.workflow_runs.filter(run =>
                 run.path === 'dynamic/pages/pages-build-deployment'
               );
-              if (legacy.every(run => run.status === 'completed')) {
-                if (legacy.length > 0) {
-                  core.info('Allowing the legacy Pages publish to settle before deploying Vite output.');
-                  await new Promise(resolve => setTimeout(resolve, 45000));
-                }
-                return;
-              }
+              if (legacy.every(run => run.status === 'completed')) return;
               core.info('Waiting for legacy Pages deployment to finish.');
               await new Promise(resolve => setTimeout(resolve, 5000));
             }
             core.setFailed('Legacy Pages deployment did not finish in time.');
+      - name: Clear the stalled November 7 Pages deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const endpoint = '/repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}';
+            const deployment = { ...context.repo, pages_deployment_id: '6cf0dff1d49df885ecae75afa4d26e089d6fc7c9' };
+            try {
+              const { data } = await github.request('GET ' + endpoint, deployment);
+              core.info('Previous Pages deployment status: ' + data.status);
+              if (['succeed', 'success', 'deployment_cancelled', 'cancelled', 'failure', 'failed'].includes(data.status)) return;
+              await github.request('POST ' + endpoint + '/cancel', deployment);
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              core.info('The previous deployment is no longer available.');
+            }
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
