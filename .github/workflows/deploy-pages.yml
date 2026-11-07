@@ -45,7 +45,13 @@ jobs:
               const legacy = data.workflow_runs.filter(run =>
                 run.path === 'dynamic/pages/pages-build-deployment'
               );
-              if (legacy.every(run => run.status === 'completed')) return;
+              if (legacy.every(run => run.status === 'completed')) {
+                if (legacy.length > 0) {
+                  core.info('Allowing the legacy Pages publish to settle before deploying Vite output.');
+                  await new Promise(resolve => setTimeout(resolve, 45000));
+                }
+                return;
+              }
               core.info('Waiting for legacy Pages deployment to finish.');
               await new Promise(resolve => setTimeout(resolve, 5000));
             }
