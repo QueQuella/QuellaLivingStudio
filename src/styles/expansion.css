@@ -164,3 +164,78 @@
 .retro-experiment-log .project-post-content p{margin:0 0 12px}
 .retro-experiment-log li+li{margin-top:12px}
 .retro-experiment-log .project-log-gallery img{border:1px solid var(--line)}
+
+/* Use one reading column for every Working Log detail, including the header. */
+.note-detail {
+  --log-gutter: clamp(24px, 12vw, 200px);
+  --log-prose-font: 'Times New Roman', Times, serif;
+  --log-label-font: 'DM Mono', monospace;
+}
+.note-detail .detail-scroll {
+  padding-inline: max(var(--log-gutter), calc((100% - 1280px) / 2));
+  scrollbar-gutter: stable both-edges;
+}
+.note-detail .detail-header {
+  min-height: 0;
+  padding: 72px 0 32px;
+  gap: 12px;
+}
+.note-detail .detail-header h1 {
+  font: italic clamp(34px, 4vw, 48px)/1.12 Georgia, serif;
+  overflow-wrap: anywhere;
+}
+.note-detail .detail-header :is(p, span) {
+  max-width: none;
+  font: 12px/1.6 var(--log-label-font);
+}
+.note-detail #detailSections {
+  padding-bottom: 72px;
+  overflow-wrap: anywhere;
+}
+.note-detail #detailSections > :is(.real-entry, .reading-entry, .detail-section, .notebook-page),
+.note-detail .markdown-body {
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+.note-detail #detailSections > :is(.real-entry, .reading-entry, .detail-section, .notebook-page) {
+  padding-bottom: 0;
+}
+.note-detail .reading-entry {
+  display: block;
+}
+.note-detail #detailSections :is(.real-entry, .reading-body, .markdown-body, .notebook-body, p, li, blockquote, td) {
+  font-family: var(--log-prose-font);
+  font-size: 18px;
+  line-height: 1.7;
+}
+.note-detail #detailSections :is(.real-entry, .reading-entry) :is(h2, h3),
+.note-detail #detailSections .markdown-body h1 {
+  font-family: var(--log-label-font);
+}
+.note-detail #detailSections :is(section h2, .markdown-body h1) {
+  font-size: 20px;
+  line-height: 1.4;
+}
+.note-detail #detailSections :is(.project-log-kicker, .book-link, .teacher-feedback > p, .flow-arrow, figcaption, th) {
+  font-family: var(--log-label-font);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.note-detail #detailSections .chapter-number { font: 56px/1 var(--log-label-font); }
+.note-detail #detailSections > article > :first-child,
+.note-detail .reading-body > :first-child,
+.note-detail .markdown-body > :first-child {
+  margin-top: 0;
+}
+.note-detail .log-mascot {
+  width: min(210px, calc(var(--log-gutter) - 16px));
+}
+@media (max-width: 800px) {
+  .note-detail { --log-gutter: clamp(16px, 5vw, 36px); }
+  .note-detail .detail-scroll { scrollbar-gutter: auto; }
+  .note-detail .log-mascot { display: none; }
+  .note-detail #detailSections :is(.real-entry, .reading-body, .markdown-body, .notebook-body, p, li, blockquote, td) {
+    font-size: 17px;
+  }
+}
