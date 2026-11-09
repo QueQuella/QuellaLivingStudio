@@ -147,18 +147,20 @@
 .ragdoll-collection .j-player iframe{height:1080px;aspect-ratio:auto}
 
 .prototype-pair.project-log-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,2vw,20px)}
-.prototype-pair .prototype-image{width:min(100%,var(--log-image-width,100%));border:1px solid var(--line)}
-.prototype-pair-height.project-log-gallery{grid-template-columns:minmax(0,1.29fr) minmax(0,1.73fr);container-type:inline-size}
-.prototype-pair-height .prototype-image{width:auto;max-width:100%;height:min(200px,calc((100cqw - clamp(8px,2vw,20px)) / 3.04))}
+.prototype-pair .prototype-image{width:100%;border:1px solid var(--line)}
+.prototype-pair-height.project-log-gallery{grid-template-columns:minmax(0,1329fr) minmax(0,1784fr)}
 .prototype-table-scroll{overflow-x:auto;margin:28px 0 36px}
 .prototype-table-scroll:focus-visible{outline:1px solid var(--accent);outline-offset:-1px}
 .prototype-table{width:100%;min-width:600px;table-layout:fixed;border-collapse:collapse;font:inherit;font-family:'Times New Roman',Times,serif}
-.prototype-table th,.prototype-table td{padding:12px;border:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.prototype-table th,.prototype-table td{padding:10px;border:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:anywhere}
 .prototype-table th{font:12px/1.7 'DM Mono',monospace;color:var(--accent);background:#10191b}
-.prototype-table th:first-child{width:32%}
-.prototype-table th:nth-child(2){width:47%}
-.prototype-table .prototype-image{display:block;width:min(100%,var(--log-image-width,100%));margin:0 0 8px;border:1px solid var(--line)}
-.prototype-table .prototype-image + br{display:none}
+.prototype-table th:first-child{width:26%}
+.prototype-table th:nth-child(2){width:43%}
+.prototype-table .prototype-image{display:block;width:100%;height:auto;border:1px solid var(--line)}
+.prototype-table .prototype-image + .prototype-image{margin-top:8px}
+.prototype-table-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.prototype-table-pair .prototype-image + .prototype-image{margin-top:0}
+.prototype-table td small{display:block;margin-top:6px;color:var(--muted)}
 
 .retro-experiment-log .retro-experiment-card{text-decoration:none;color:#e7eee4}
 .retro-experiment-log .project-post-content p{margin:0 0 12px}
@@ -167,12 +169,18 @@
 
 /* Use one reading column for every Working Log detail, including the header. */
 .note-detail {
-  --log-gutter: clamp(24px, 12vw, 200px);
+  --log-archive-inset: clamp(20px, 2.7vw, 40px);
+  --log-gutter: max(15vw, calc(var(--log-archive-inset) + 180px));
   --log-prose-font: 'Times New Roman', Times, serif;
   --log-label-font: 'DM Mono', monospace;
 }
+.note-detail > .back-link {
+  left: var(--log-archive-inset);
+  font: 14px/1.4 var(--log-label-font);
+  white-space: nowrap;
+}
 .note-detail .detail-scroll {
-  padding-inline: max(var(--log-gutter), calc((100% - 1280px) / 2));
+  padding-inline: var(--log-gutter);
   scrollbar-gutter: stable both-edges;
 }
 .note-detail .detail-header {
@@ -231,11 +239,36 @@
 .note-detail .log-mascot {
   width: min(210px, calc(var(--log-gutter) - 16px));
 }
-@media (max-width: 800px) {
+@media (max-width: 960px) {
   .note-detail { --log-gutter: clamp(16px, 5vw, 36px); }
-  .note-detail .detail-scroll { scrollbar-gutter: auto; }
+  .note-detail > .back-link { top: 8px; left: var(--log-gutter); }
+  .note-detail .detail-scroll { inset-block-start: 52px; scrollbar-gutter: auto; }
+  .note-detail .detail-header { padding-top: 22px; }
   .note-detail .log-mascot { display: none; }
   .note-detail #detailSections :is(.real-entry, .reading-body, .markdown-body, .notebook-body, p, li, blockquote, td) {
     font-size: 17px;
   }
 }
+
+.note-detail #detailSections .prototype-table td {
+  font-size: 16px;
+  line-height: 1.45;
+}
+.note-detail .project-log-gallery {
+  gap: clamp(8px, 2vw, 20px);
+}
+.note-detail .log-detail-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font: 12px/1.55 var(--log-label-font);
+}
+.log-detail-navigation a { color: var(--ink); text-decoration: none; }
+.log-detail-navigation a:hover, .log-detail-navigation a:focus-visible { color: var(--accent); text-decoration: underline; }
+.log-detail-navigation .previous { grid-column: 1; }
+.log-detail-navigation .next { grid-column: 2; text-align: right; }
+.log-detail-navigation :is(span, strong) { display: block; }
+.log-detail-navigation span { color: var(--muted); margin-bottom: 5px; }

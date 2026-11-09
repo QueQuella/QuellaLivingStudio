@@ -1339,6 +1339,7 @@
         $("detailSections").append(s);
       });
     }
+    if (isLog) appendLogNavigation();
     $("dataStrip").hidden = isLog;
     $("detailScroll").scrollTop = 0;
     requestAnimationFrame(updateStrip);
@@ -1350,6 +1351,33 @@
     lastLogSpark = 0;
     logPileAmount = 0;
     logSparks = [];
+  }
+  function appendLogNavigation() {
+    const entries = window.StudioEntries.log;
+    const previous = entries.findLastIndex((entry, slot) => entry && slot < index);
+    const next = entries.findIndex((entry, slot) => entry && slot > index);
+    if (previous < 0 && next < 0) return;
+
+    const nav = document.createElement("nav");
+    nav.className = "log-detail-navigation";
+    nav.setAttribute("aria-label", "Adjacent working logs");
+    for (const [slot, direction, label] of [
+      [previous, "previous", "← PREVIOUS LOG"],
+      [next, "next", "NEXT LOG →"],
+    ]) {
+      if (slot < 0) continue;
+      const link = document.createElement("a");
+      link.href = "#log";
+      link.dataset.logSlot = String(slot);
+      link.className = direction;
+      const caption = document.createElement("span");
+      caption.textContent = label;
+      const title = document.createElement("strong");
+      title.textContent = notes[slot].title;
+      link.append(caption, title);
+      nav.append(link);
+    }
+    $("detailSections").append(nav);
   }
   function prepareAuthoredEntry() {
     document

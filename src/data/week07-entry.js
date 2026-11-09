@@ -51,5 +51,5 @@ window.StudioEntries.log[5] = `
     <h2>07 / NEXT</h2>
     <p>Work on the visual display and scene building.<br>Transfer the Blueprint.<br>Press E to interact with the new computer.</p>
   </section>
-  <footer class="entry-footer">Programming Dream · Development Log<a href="#log" data-log-slot="6">Next cassette / ReadingW_Iteration3 →</a></footer>
+  <footer class="entry-footer">Programming Dream · Development Log</footer>
 </article>`;

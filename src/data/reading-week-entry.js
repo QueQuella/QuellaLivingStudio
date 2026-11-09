@@ -18,5 +18,5 @@ window.StudioEntries.log[6] = `
       working on the shader and niagara VFX for objects<br>
       continue collect test data for rest 4 object</p>
   </section>
-  <footer class="entry-footer">Programming Dream · Development Log<a href="#log" data-log-slot="7">Next cassette / W9_prototype →</a></footer>
+  <footer class="entry-footer">Programming Dream · Development Log</footer>
 </article>`;
