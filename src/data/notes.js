@@ -72,10 +72,19 @@ window.StudioNotes = [
     summary: "Zero-gravity motion · Particle fields · Webcam interaction",
     cover: "./art/retro-ragdoll/mode-flock.png",
   },
-  ...Array.from({ length: 9 }, (_, i) => ({
-    id: "note-" + String(i + 10).padStart(2, "0"),
-    title: "Programming Dream / Log " + String(i + 10).padStart(2, "0"),
-    shortTitle: "Dream / Log " + String(i + 10).padStart(2, "0"),
+  {
+    id: "note-10",
+    title: "W10_ComfyUI_AI video",
+    shortTitle: "W10 / ComfyUI",
+    date: "2026.11.12",
+    type: "AI Video / Experiment Log",
+    summary: "Wan2.2 image-to-video · Motion and expression tests",
+    cover: "./assets/working-log/week10/cover.webp",
+  },
+  ...Array.from({ length: 8 }, (_, i) => ({
+    id: "note-" + String(i + 11).padStart(2, "0"),
+    title: "Programming Dream / Log " + String(i + 11).padStart(2, "0"),
+    shortTitle: "Dream / Log " + String(i + 11).padStart(2, "0"),
     date: "—.—.—",
     type: "Programming Dream / Upcoming Log",
     project: "programming-dream",

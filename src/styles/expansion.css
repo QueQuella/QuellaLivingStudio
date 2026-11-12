@@ -272,3 +272,18 @@
 .log-detail-navigation .next { grid-column: 2; text-align: right; }
 .log-detail-navigation :is(span, strong) { display: block; }
 .log-detail-navigation span { color: var(--muted); margin-bottom: 5px; }
+
+.note-detail .week10-videos {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.week10-videos video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+@media (max-width: 760px) {
+  .note-detail .week10-videos { grid-template-columns: minmax(0, 1fr); }
+}
