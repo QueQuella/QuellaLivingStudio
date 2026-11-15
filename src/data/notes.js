@@ -81,10 +81,19 @@ window.StudioNotes = [
     summary: "Wan2.2 image-to-video · Motion and expression tests",
     cover: "./assets/working-log/week10/cover.webp",
   },
-  ...Array.from({ length: 8 }, (_, i) => ({
-    id: "note-" + String(i + 11).padStart(2, "0"),
-    title: "Programming Dream / Log " + String(i + 11).padStart(2, "0"),
-    shortTitle: "Dream / Log " + String(i + 11).padStart(2, "0"),
+  {
+    id: "note-11",
+    title: "W10_Archive&Demo",
+    shortTitle: "Dream / Archive & Demo",
+    date: "2026.11.14",
+    type: "Programming Dream / Development Log",
+    summary: "Five-object archive · Spawn timer · Gameplay demo",
+    project: "programming-dream",
+  },
+  ...Array.from({ length: 7 }, (_, i) => ({
+    id: "note-" + String(i + 12).padStart(2, "0"),
+    title: "Programming Dream / Log " + String(i + 12).padStart(2, "0"),
+    shortTitle: "Dream / Log " + String(i + 12).padStart(2, "0"),
     date: "—.—.—",
     type: "Programming Dream / Upcoming Log",
     project: "programming-dream",
