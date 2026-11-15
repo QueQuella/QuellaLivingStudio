@@ -66,10 +66,10 @@ window.StudioEntries.log[10] = `
   </section>
   <section>
     <h2>03 / DEMO</h2>
-    <figure class="project-log-wide">
-      <div class="project-log-media-placeholder">Gameplay demo video pending</div>
-      <figcaption>Programming Dream · Gameplay demo</figcaption>
-    </figure>
+    <h3>Demo video ready</h3>
+    <div class="project-posts">
+      <a href="#programming-dream" data-project-portal>Explore Programming Dream ↗</a>
+    </div>
   </section>
   <footer class="entry-footer">Programming Dream · Development Log</footer>
 </article>`;

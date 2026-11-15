@@ -8,6 +8,7 @@ const host = document.getElementById("pdCanvas");
 const story = document.getElementById("pdStory");
 const about = document.getElementById("pdAbout");
 const showcase = document.getElementById("pdShowcase");
+const demoVideo = document.getElementById("pdDemoVideo");
 const question = document.getElementById("pdQuestion");
 const filmTransition = document.getElementById("pdFilmTransition");
 const further = document.getElementById("pdFurther");
@@ -220,6 +221,15 @@ view.addEventListener(
   },
   { capture: true },
 );
+const demoVisibility = new IntersectionObserver(([entry]) => {
+  if (entry.isIntersecting && entry.intersectionRatio >= 0.35 && active) {
+    demoVideo.play().catch(() => {});
+  } else {
+    demoVideo.pause();
+  }
+}, { root: view, threshold: 0.35 });
+demoVisibility.observe(demoVideo);
+
 view.addEventListener("scroll", readScroll, { passive: true });
 view.addEventListener("pointermove", (event) => {
   if (event.pointerType !== "mouse" || reduced.matches) return;
@@ -243,7 +253,9 @@ window.ProgrammingDream = {
   setActive(value) {
     active = value;
     if (value) this.enter();
-    else if (frameId) {
+    else {
+      demoVideo.pause();
+      if (!frameId) return;
       cancelAnimationFrame(frameId);
       frameId = 0;
       lastTime = 0;

@@ -1380,6 +1380,13 @@
     $("detailSections").append(nav);
   }
   function prepareAuthoredEntry() {
+    const projectPortal = $("detailSections").querySelector("[data-project-portal]");
+    if (projectPortal) {
+      const projectCard = $("projectLevels").querySelector(
+        `.project-post[href="${projectPortal.getAttribute("href")}"]`,
+      );
+      if (projectCard) projectPortal.replaceWith(projectCard.cloneNode(true));
+    }
     document
       .querySelectorAll("[data-scroll-target]")
       .forEach(

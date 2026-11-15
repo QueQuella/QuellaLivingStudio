@@ -150,22 +150,21 @@ export default function ProgrammingDreamPage() {
             <h2 id="pdShowcaseTitle" tabIndex="-1">
               Inside <em>the dream.</em>
             </h2>
-            <p>Gameplay film / coming soon</p>
+            <p>Gameplay demo</p>
           </header>
-          <div
+          <video
+            id="pdDemoVideo"
             className="pd-video-slot"
             data-pd-reveal={true}
-            aria-label="Gameplay video placeholder. Video not yet available."
-          >
-            <div className="pd-video-corners" aria-hidden="true"></div>
-            <span className="pd-video-icon" aria-hidden="true">
-              ▷
-            </span>
-            <p>THE DREAM IS STILL TAKING SHAPE.</p>
-            <span>GAMEPLAY VIDEO / COMING SOON</span>
-          </div>
+            src="./assets/working-log/archive-demo/demoPD_1.mp4"
+            aria-label="Programming Dream gameplay demo"
+            muted
+            playsInline
+            controls
+            preload="none"
+          />
           <footer data-pd-reveal={true}>
-            <p>Human input → machine interpretation → digital life.</p>
+            <p>BGM from Pixabay</p>
           </footer>
         </section>
         <section

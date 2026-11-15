@@ -287,15 +287,3 @@
 @media (max-width: 760px) {
   .note-detail .week10-videos { grid-template-columns: minmax(0, 1fr); }
 }
-
-.project-log-media-placeholder {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 16 / 9;
-  padding: 12px;
-  border: 1px dashed var(--line);
-  background: var(--paper);
-  color: var(--muted);
-  font: 12px/1.5 var(--log-label-font);
-  text-align: center;
-}
