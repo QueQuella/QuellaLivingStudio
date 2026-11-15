@@ -1,8 +1,9 @@
+const screenshotFolder = "./assets/working-log/archive-demo";
 const screenshots = [
-  "Level boundaries in the Unreal Engine editor",
-  "Bounds &amp; block player pawn · DANGER warning",
-  "Stanford Bunny · In-world observation prompt",
-  "Stanford Bunny · 3D scanning and digital reconstruction entry",
+  ["level-boundaries", "Level boundaries in the Unreal Engine editor"],
+  ["boundary-warning", "Bounds &amp; block player pawn · DANGER warning"],
+  ["bunny-observation", "Stanford Bunny · In-world observation prompt"],
+  ["bunny-archive", "Stanford Bunny · 3D scanning and digital reconstruction entry"],
 ];
 
 window.StudioEntries.log[10] = `
@@ -54,9 +55,11 @@ window.StudioEntries.log[10] = `
     <h2>02 / PROGRESS</h2>
     <p>Added a time mechanic. Spawned objects disappear after 12 minutes.</p>
     <div class="project-log-gallery">
-      ${screenshots.map((caption) => `
+      ${screenshots.map(([file, caption]) => `
         <figure>
-          <div class="project-log-media-placeholder">Screenshot pending</div>
+          <a href="${screenshotFolder}/${file}.webp" target="_blank" rel="noopener">
+            <img src="${screenshotFolder}/${file}.webp" alt="${caption}" loading="lazy">
+          </a>
           <figcaption>${caption}</figcaption>
         </figure>`).join("")}
     </div>
