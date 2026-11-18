@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430">
+  <rect width="1200" height="430" fill="#0a1220"/>
+  <text x="60" y="60" fill="#f2fbff" font-family="Arial" font-size="30" font-weight="bold">The participant draws freely, but the model's vocabulary is fixed</text>
+  <g font-family="Arial" text-anchor="middle">
+    <circle cx="180" cy="220" r="110" fill="#123a4d" stroke="#49ddff" stroke-width="4"/>
+    <text x="180" y="205" fill="#76e7ff" font-size="22" font-weight="bold">OPEN INPUT</text>
+    <text x="180" y="240" fill="white" font-size="18">shape, scale, stroke,</text><text x="180" y="266" fill="white" font-size="18">timing, intention</text>
+    <path d="M310 220 H450" stroke="#bcaaff" stroke-width="6" marker-end="url(#a)"/>
+    <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#bcaaff"/></marker></defs>
+    <rect x="470" y="110" width="220" height="220" rx="26" fill="#282453" stroke="#bcaaff" stroke-width="4"/>
+    <text x="580" y="185" fill="#cbbcff" font-size="23" font-weight="bold">ONNX MODEL</text>
+    <text x="580" y="225" fill="white" font-size="18">probabilities</text><text x="580" y="255" fill="white" font-size="18">+ 80% threshold</text>
+    <path d="M710 220 H820" stroke="#ff80d9" stroke-width="6" marker-end="url(#b)"/>
+    <defs><marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ff80d9"/></marker></defs>
+    <rect x="840" y="88" width="300" height="264" rx="26" fill="#3c2448" stroke="#ff80d9" stroke-width="4"/>
+    <text x="990" y="132" fill="#ff9fe2" font-size="22" font-weight="bold">CLOSED OUTPUT SET</text>
+    <text x="990" y="177" fill="white" font-size="20">Car</text><text x="990" y="210" fill="white" font-size="20">Utah Teapot</text><text x="990" y="243" fill="white" font-size="20">Stanford Bunny</text><text x="990" y="276" fill="white" font-size="20">Catmull's Hand</text><text x="990" y="309" fill="white" font-size="20">Suzanne / Monkey Head</text>
+  </g>
+  <text x="600" y="398" text-anchor="middle" fill="#aabed0" font-family="Arial" font-size="17">The participant proposes an image; the system decides how that image becomes legible.</text>
+</svg>

@@ -133,6 +133,11 @@
 
 .project-log-wide{margin:28px 0 36px}.project-log-wide a{display:block;border:1px solid var(--line)}.project-log-wide img{display:block;width:100%;height:auto}.project-log-wide figcaption{font:12px/1.7 'DM Mono',monospace;color:var(--muted);margin-top:12px}
 
+.agency-log .agency-lead{font-size:clamp(19px,2.2vw,25px)!important;line-height:1.65!important;color:var(--ink);max-width:760px!important}
+.agency-log .agency-diagram{margin:32px 0 42px}.agency-log .agency-diagram a{display:block;border:1px solid var(--line);background:#07111f}.agency-log .agency-diagram img{display:block;width:100%;height:auto}.agency-log .agency-diagram figcaption{margin-top:12px;font:12px/1.7 'DM Mono',monospace;color:var(--muted)}
+.agency-log .agency-summary{border-left:2px solid var(--accent);padding-left:20px;color:var(--ink)}
+@media(max-width:760px){.agency-log .agency-diagram{margin:24px 0 34px}.agency-log .agency-summary{padding-left:14px}}
+
 .week07-entry{min-width:0;overflow-wrap:anywhere}
 .week07-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start;margin:30px 0;padding-bottom:30px;border-bottom:1px solid var(--line)}
 .week07-row figure{margin:0;min-width:0}.week07-row img{display:block;width:100%;height:auto;border:1px solid var(--line)}
