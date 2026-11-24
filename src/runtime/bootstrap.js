@@ -28,6 +28,7 @@ export function bootStudio() {
     await import("../data/week10-entry.js");
     await import("../data/archive-demo-entry.js");
     await import("../data/agency-entry.js");
+    await import("../data/controller-entry.js");
     await import("./expansion.js");
     await import("./journey.js");
     await import("./script.js");
