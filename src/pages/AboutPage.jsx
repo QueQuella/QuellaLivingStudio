@@ -58,6 +58,8 @@ export default function AboutPage() {
                 This is my Personal Living Studio for
                 <br />
                 <strong>Generative AI Workflow for Media Art.</strong>
+                <br />
+                Mr. Jarry Jiayang HUANG
               </p>
               <p className="profile-note">
                 A place for things I make,
